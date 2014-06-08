@@ -1,11 +1,9 @@
 cmake.h
-auto.h
 commit.h
 Makefile
 src/tasksh
 *~
 .*.swp
-package-config/osx/binary/task
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
