@@ -24,42 +24,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// Strings that should be localized:
+//   - All text output that the user sees or types
+//
+// Strings that should NOT be localized:
+//   - ./taskrc configuration variable names
+//   - certain literals associated with parsing
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#ifndef INCLUDED_I18N
+#define INCLUDED_I18N
+
 #include <cmake.h>
-#include <iostream>
-#include <cstring>
-#include <i18n.h>
 
-////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
-{
-  int status = 0;
+// Translators:
+//   Add more, as appropriate.
+#if PACKAGE_LANGUAGE == LANGUAGE_ENG_USA
+#include <eng-USA.h>
+#endif
 
-  // Lightweight version checking that doesn't require initialization or any I/O.
-  if (argc == 2 && !strcmp (argv[1], "--version"))
-  {
-    std::cout << VERSION << "\n";
-  }
-  else
-  {
-    try
-    {
-      // Umm...
-    }
+#define CCOLOR_BOLD             500
+#define CCOLOR_UNDERLINE        501
+#define CCOLOR_ON               502
+#define CCOLOR_BRIGHT           503
+#define CCOLOR_BLACK            504
+#define CCOLOR_RED              505
+#define CCOLOR_GREEN            506
+#define CCOLOR_YELLOW           507
+#define CCOLOR_BLUE             508
+#define CCOLOR_MAGENTA          509
+#define CCOLOR_CYAN             510
+#define CCOLOR_WHITE            511
 
-    catch (const std::string& error)
-    {
-      std::cerr << error << "\n";
-      status = -1;
-    }
+#define CCOLOR_OFF              520
+#define CCOLOR_UNKNOWN          521
 
-    catch (...)
-    {
-      std::cerr << "Unknown error." << "\n";
-      status = -2;
-    }
-  }
+#endif
 
-  return status;
-}
-
-////////////////////////////////////////////////////////////////////////////////

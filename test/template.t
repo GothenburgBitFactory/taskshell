@@ -48,7 +48,7 @@ my $ut = basename ($0);
 # Bug <id> - <description>
 my $output = qx{../src/tasksh --version 2>&1};
 ok ($? == 0, "$ut: version check");
-like ($output, qr/tasksh version/ms, "$ut: tasksh version found");
+like ($output, qr/0.9.0.dev/ms, "$ut: tasksh version found");
 
 # Cleanup.
 #unlink qw(), $rc;

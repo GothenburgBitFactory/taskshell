@@ -33,11 +33,10 @@ add_custom_target (build_tests DEPENDS ${test_SRCS}
                                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test)
 
 foreach (src_FILE ${test_SRCS})
-  add_executable (${src_FILE} "${src_FILE}.cpp" test.cpp)
-  target_link_libraries (${src_FILE} tasksh ${TASKSH_LIBRARIES})
+  add_executable (${src_FILE} "${src_FILE}.cpp"
+                              ../src/Color.cpp
+                              ../src/text.cpp
+                              test.cpp)
+  target_link_libraries (${src_FILE} ${TASKSH_LIBRARIES})
 endforeach (src_FILE)
 
-#SET(CMAKE_BUILD_TYPE gcov)
-#SET(CMAKE_CXX_FLAGS_GCOV "--coverage")
-#SET(CMAKE_C_FLAGS_GCOV "--coverage")
-#SET(CMAKE_EXE_LINKER_FLAGS_GCOV "--coverage")

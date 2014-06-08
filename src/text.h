@@ -24,42 +24,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <cmake.h>
-#include <iostream>
-#include <cstring>
-#include <i18n.h>
+#ifndef INCLUDED_TEXT
+#define INCLUDED_TEXT
 
-////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
-{
-  int status = 0;
+#include <string>
+#include <vector>
 
-  // Lightweight version checking that doesn't require initialization or any I/O.
-  if (argc == 2 && !strcmp (argv[1], "--version"))
-  {
-    std::cout << VERSION << "\n";
-  }
-  else
-  {
-    try
-    {
-      // Umm...
-    }
+std::string trimLeft (const std::string& in, const std::string& t = " ");
+std::string trimRight (const std::string& in, const std::string& t = " ");
+std::string trim (const std::string& in, const std::string& t = " ");
+void split (std::vector<std::string>&, const std::string&, const char);
+std::string lowerCase (const std::string&);
+const std::string format (const std::string&, const std::string&);
 
-    catch (const std::string& error)
-    {
-      std::cerr << error << "\n";
-      status = -1;
-    }
-
-    catch (...)
-    {
-      std::cerr << "Unknown error." << "\n";
-      status = -2;
-    }
-  }
-
-  return status;
-}
-
+#endif
 ////////////////////////////////////////////////////////////////////////////////

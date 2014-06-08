@@ -3,7 +3,8 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src
                      ${TASKSH_INCLUDE_DIRS})
 
-set (tasksh_SRCS Color.cpp Color.h)
+set (tasksh_SRCS Color.cpp Color.h
+                 text.cpp  text.h)
 
 add_executable (tasksh_executable main.cpp ${task_SRCS})
 

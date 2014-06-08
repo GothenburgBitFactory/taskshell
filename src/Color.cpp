@@ -30,7 +30,6 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-#include <main.h>
 #include <Color.h>
 #include <text.h>
 #include <i18n.h>
