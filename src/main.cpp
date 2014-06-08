@@ -28,8 +28,6 @@
 #include <iostream>
 #include <cstring>
 
-Context context;
-
 ////////////////////////////////////////////////////////////////////////////////
 int main (int argc, const char** argv)
 {

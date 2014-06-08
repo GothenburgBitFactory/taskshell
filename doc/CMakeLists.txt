@@ -7,6 +7,6 @@ foreach (man_FILE ${man_FILES})
     man/${man_FILE})
 endforeach (man_FILE)
 
-install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man/   DESTINATION ${TASK_MAN1DIR}
+install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man/   DESTINATION ${TASKSH_MAN1DIR}
                                                       FILES_MATCHING PATTERN "*.1")
 
