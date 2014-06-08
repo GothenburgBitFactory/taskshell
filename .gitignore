@@ -1,0 +1,17 @@
+cmake.h
+auto.h
+commit.h
+Makefile
+src/tasksh
+*~
+.*.swp
+package-config/osx/binary/task
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+_CPack_Packages
+CPackConfig.cmake
+CPackSourceConfig.cmake
+patches
+*.exe

@@ -1,0 +1,45 @@
+
+New Features in tasksh 0.9
+
+
+New commands in tasksh 0.9
+
+
+New configuration options in tasksh 0.9
+
+
+Newly deprecated features in tasksh 0.9
+
+
+Removed features in 0.9
+
+
+Known Issues
+
+
+Tasksh has been built and tested on the following configurations:
+
+  * OS X
+  * Fedora
+  * Ubuntu
+  * Debian
+  * Arch Linux
+  * FreeBSD
+  * Cygwin 1.7
+
+---
+
+While Tasksh has undergone testing, bugs are sure to remain.  If you
+encounter a bug, please enter a new issue at:
+
+  http://bug.tasktools.org
+
+Or you can also report the issue in the forums at:
+
+  http://answers.tasktools.org
+
+Or just send a message to:
+
+  support@taskwarrior.org
+
+Thank you.

@@ -1,0 +1,37 @@
+Installation Instructions
+-------------------------
+
+Please follow the instructions below to build tasksh with cmake.
+
+
+Pre-requisites
+--------------
+
+You will need the CMake build system installed in order to build tasksh
+from source.
+
+More information on cmake can be obtained at http://cmake.org
+
+
+Basic Installation
+------------------
+
+Build and configurations options
+--------------------------------
+
+Localizations
+-------------
+
+Uninstallation
+--------------
+
+Tasksh Build Notes
+-----------------------
+
+Operating System Notes
+----------------------
+
+Troubleshooting
+---------------
+
+---
