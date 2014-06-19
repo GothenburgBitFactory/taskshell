@@ -30,6 +30,16 @@
 #include <i18n.h>
 
 ////////////////////////////////////////////////////////////////////////////////
+static int commandLoop ()
+{
+  // TODO Display prompt
+  // TODO Wait for input
+  // TODO Dispatch command
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int main (int argc, const char** argv)
 {
   int status = 0;
@@ -43,7 +53,8 @@ int main (int argc, const char** argv)
   {
     try
     {
-      // Umm...
+      while ((status = commandLoop ()) == 0)
+        ;
     }
 
     catch (const std::string& error)
