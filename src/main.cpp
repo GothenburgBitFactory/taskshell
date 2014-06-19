@@ -29,14 +29,37 @@
 #include <cstring>
 #include <i18n.h>
 
+#ifdef HAVE_READLINE
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 static int commandLoop ()
 {
-  // TODO Display prompt
-  // TODO Wait for input
-  // TODO Dispatch command
+  // TODO Compose prompt.
+  std::string prompt = "task> ";
 
-  return 0;
+  // Display prompt, get input.
+  char *line_read = readline (prompt.c_str ());
+  if (! line_read)
+    return 1;
+
+  // Save history.
+  if (*line_read)
+    add_history (line_read);
+
+  std::string command (line_read);
+
+  free (line_read);
+
+  // TODO Dispatch command
+  int status = 0;
+  if (command == "exit") status = 1;
+  // TODO diagnostics
+  // TODO help
+
+  return status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
