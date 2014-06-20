@@ -7,6 +7,7 @@ set (tasksh_SRCS Color.cpp Color.h
                  text.cpp  text.h)
 
 add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
+target_link_libraries (tasksh_executable ${TASKSH_LIBRARIES})
 
 set_property (TARGET tasksh_executable PROPERTY OUTPUT_NAME "tasksh")
 
