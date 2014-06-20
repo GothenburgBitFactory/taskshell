@@ -64,28 +64,24 @@ set (PACKAGE_VERSION "${VERSION}")
 set (PACKAGE_STRING "${PACKAGE} ${VERSION}")
 
 message ("-- Looking for pthread")
-find_path (PTHREAD_INCLUDE_DIR pthread.h)
-find_library (PTHREAD_LIBRARY NAMES pthread)
-if (PTHREAD_INCLUDE_DIR AND PTHREAD_LIBRARY)
-  message ("-- Found pthread: ${PTHREAD_LIBRARY}")
+find_package (Threads)
+if (THREADS_FOUND)
   set (HAVE_LIBPTHREAD true)
-  set (TASKSH_INCLUDE_DIRS ${TASKSH_INCLUDE_DIRS} ${PTHREAD_INCLUDE_DIR})
-  set (TASKSH_LIBRARIES    ${TASKSH_LIBRARIES}    ${PTHREAD_LIBRARIES})
-endif (PTHREAD_INCLUDE_DIR AND PTHREAD_LIBRARY)
+  set (TASKD_INCLUDE_DIRS ${TASKD_INCLUDE_DIRS} ${THREADS_INCLUDE_DIR})
+  set (TASKD_LIBRARIES    ${TASKD_LIBRARIES}    ${THREADS_LIBRARIES})
+endif (THREADS_FOUND)
 
 # include the readline library finder module
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 # find readline
 message ("-- Looking for GNU Readline")
-find_package (Readline)
+find_package (Readline REQUIRED)
 if (READLINE_FOUND)
   set (HAVE_READLINE true)
   set (TASKSH_INCLUDE_DIRS ${TASKSH_INCLUDE_DIRS} ${READLINE_INCLUDE_DIR})
   set (TASKSH_LIBRARIES    ${TASKSH_LIBRARIES}    ${READLINE_LIBRARIES})
 endif (READLINE_FOUND)
-
-check_function_exists (wordexp HAVE_WORDEXP)
 
 # Set the package language.
 if (LANGUAGE)
