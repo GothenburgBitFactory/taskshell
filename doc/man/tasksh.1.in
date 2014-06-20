@@ -15,14 +15,10 @@ The tasksh program can be used to create a more immersive task environment.
 Any task command you run outside the shell can also be run inside the shell,
 without the need to prefix every command with "task".
 
-.br
-Moreover, task commands can be written in a file which can be passed or
-redirected to tasksh for batch execution.
-
 .RS
 $ tasksh
 .br
-.B task 2.3.0
+.B task 2.4.0
 shell
 .br
 
@@ -93,58 +89,6 @@ ID Project Pri Due        Active Age   Description
 .br
  $
 .br
- $ cat task.commands
-.br
- add foo
-.br
- add bar
-.br
- $ tasksh task.commands
-.br
- task 2.3.0 shell
-.br
-
-.br
- Enter any task command (such as 'list'), or hit 'Enter'.
-.br
- There is no need to include the 'task' command itself.
-.br
- Enter 'quit' to end the session.
-.br
-
-.br
- task> add foo
-.br
- Created task 8.
-.br
- task> add bar
-.br
- Created task 9.
-.br
- $
-.br
- $ cat task.commands | tasksh
-.br
- task 2.3.0 shell
-.br
-
-.br
- Enter any task command (such as 'list'), or hit 'Enter'.
-.br
- There is no need to include the 'task' command itself.
-.br
- Enter 'quit' to end the session.
-.br
-
-.br
- task> add foo
-.br
- Created task 8.
-.br
- task> add bar
-.br
- Created task 9.
-.br
 
 .RE
 
@@ -158,9 +102,6 @@ http://www.opensource.org/licenses/mit-license.php for more information.
 
 .SH SEE ALSO
 .BR task(1),
-.BR taskrc(5),
-.BR task-color(5),
-.BR task-sync(5)
 
 For more information regarding taskwarrior, see the following:
 
