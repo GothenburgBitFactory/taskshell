@@ -28,6 +28,7 @@
 #include <iostream>
 #include <cstring>
 #include <i18n.h>
+#include <text.h>
 
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
@@ -43,19 +44,22 @@ static int commandLoop ()
   // Display prompt, get input.
   char *line_read = readline (prompt.c_str ());
   if (! line_read)
+  {
+    std::cout << "\n";
     return 1;
+  }
 
   // Save history.
   if (*line_read)
     add_history (line_read);
 
   std::string command (line_read);
-
   free (line_read);
 
-  // TODO Dispatch command
+  // Dispatch command
   int status = 0;
-  if (command == "exit") status = 1;
+  if (closeEnough ("exit", command, 3)) status = 1;
+
   // TODO diagnostics
   // TODO help
 
