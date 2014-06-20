@@ -30,79 +30,12 @@
 #include <i18n.h>
 #include <text.h>
 
-#ifdef HAVE_READLINE
-#include <readline/readline.h>
-#include <readline/history.h>
-#endif
-
-int cmdHelp ();
-int cmdDiagnostics ();
-
 ////////////////////////////////////////////////////////////////////////////////
-static int commandLoop ()
+int cmdHelp ()
 {
-  // TODO Compose prompt.
-  std::string prompt = "task> ";
+  std::cout << "help\n";
 
-  // Display prompt, get input.
-  char *line_read = readline (prompt.c_str ());
-  if (! line_read)
-  {
-    std::cout << "\n";
-    return 1;
-  }
-
-  // Save history.
-  if (*line_read)
-    add_history (line_read);
-
-  std::string command (line_read);
-  free (line_read);
-
-  // Dispatch command
-  int status = 0;
-       if (closeEnough ("exit",        command, 3)) status = 1;
-  else if (closeEnough ("quit",        command, 3)) status = 1;
-  else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
-  else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
-
-  // TODO help
-
-  return status;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
-{
-  int status = 0;
-
-  // Lightweight version checking that doesn't require initialization or any I/O.
-  if (argc == 2 && !strcmp (argv[1], "--version"))
-  {
-    std::cout << VERSION << "\n";
-  }
-  else
-  {
-    try
-    {
-      while ((status = commandLoop ()) == 0)
-        ;
-    }
-
-    catch (const std::string& error)
-    {
-      std::cerr << error << "\n";
-      status = -1;
-    }
-
-    catch (...)
-    {
-      std::cerr << "Unknown error." << "\n";
-      status = -2;
-    }
-  }
-
-  return status;
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

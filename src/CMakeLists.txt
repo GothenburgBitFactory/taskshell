@@ -4,6 +4,7 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${TASKSH_INCLUDE_DIRS})
 
 set (tasksh_SRCS diag.cpp
+                 help.cpp
                  Color.cpp Color.h
                  text.cpp  text.h)
 
