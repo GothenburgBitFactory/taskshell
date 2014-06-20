@@ -27,6 +27,7 @@
 #include <cmake.h>
 #include <vector>
 #include <string>
+#include <strings.h>
 
 static void replace_positional (std::string&, const std::string&, const std::string&);
 
@@ -76,6 +77,36 @@ std::string lowerCase (const std::string& input)
   std::string output = input;
   std::transform (output.begin (), output.end (), output.begin (), tolower);
   return output;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+bool compare (
+  const std::string& left,
+  const std::string& right,
+  bool sensitive /*= true*/)
+{
+  // Use strcasecmp if required.
+  if (!sensitive)
+    return strcasecmp (left.c_str (), right.c_str ()) == 0 ? true : false;
+
+  // Otherwise, just use std::string::operator==.
+  return left == right;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+bool closeEnough (
+  const std::string& reference,
+  const std::string& attempt,
+  unsigned int minLength /* = 0 */)
+{
+  if (compare (reference, attempt, false))
+    return true;
+
+  if (attempt.length () < reference.length () &&
+      attempt.length () >= minLength)
+    return compare (reference.substr (0, attempt.length ()), attempt, false);
+
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
