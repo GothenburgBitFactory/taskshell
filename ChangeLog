@@ -1,6 +1,6 @@
 0.9 () -
 
-- ?
+- libreadline support added for line editing and command history.
 
 
 
