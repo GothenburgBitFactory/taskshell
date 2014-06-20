@@ -6,7 +6,7 @@ include_directories (${CMAKE_SOURCE_DIR}
 set (tasksh_SRCS Color.cpp Color.h
                  text.cpp  text.h)
 
-add_executable (tasksh_executable main.cpp ${task_SRCS})
+add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
 
 set_property (TARGET tasksh_executable PROPERTY OUTPUT_NAME "tasksh")
 
