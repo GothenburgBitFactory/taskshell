@@ -35,6 +35,10 @@
 #include <readline/history.h>
 #endif
 
+// TODO These conflict with tw commands. This needs to be resolved.
+//      Perhaps an escape, such as '-- help' could invoke local help, or using
+//      a 'task' prefix could disambiguate.
+
 // tasksh commands.
 int cmdHelp ();
 int cmdDiagnostics ();
@@ -49,6 +53,7 @@ static int commandLoop ()
   std::string prompt = composePrompt ();
 
   // Display prompt, get input.
+#ifdef HAVE_READLINE
   char *line_read = readline (prompt.c_str ());
   if (! line_read)
   {
@@ -62,6 +67,13 @@ static int commandLoop ()
 
   std::string command (line_read);
   free (line_read);
+#else
+  std::cout << prompt;
+  std::string command;
+  std::getline (std::cin, command);
+  if (command.find ('\n') == std::string::npos)
+    std::cout << "\n";
+#endif
 
   // Dispatch command
   int status = 0;
@@ -69,8 +81,6 @@ static int commandLoop ()
   else if (closeEnough ("quit",        command, 3)) status = 1;
   else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
   else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
-
-  // TODO help
 
   return status;
 }

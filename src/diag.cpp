@@ -40,6 +40,12 @@ int cmdDiagnostics ()
 {
   std::cout << "diagnostics\n";
 
+  // TODO Version
+  // TODO Platform
+  // TODO pthreads
+  // TODO libreadline
+  // TODO Taskwarrior version + location
+
   return 0;
 }
 
