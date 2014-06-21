@@ -26,7 +26,9 @@
 
 #include <cmake.h>
 #include <iostream>
+#include <string>
 #include <cstring>
+#include <stdlib.h>
 #include <i18n.h>
 #include <text.h>
 
@@ -43,6 +45,7 @@
 int cmdHelp ();
 int cmdDiagnostics ();
 std::string composePrompt ();
+std::string findTaskwarrior ();
 
 ////////////////////////////////////////////////////////////////////////////////
 static int commandLoop ()
@@ -81,6 +84,15 @@ static int commandLoop ()
   else if (closeEnough ("quit",        command, 3)) status = 1;
   else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
   else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
+  else
+  {
+    std::cout << "[task " << command << "]\n";
+    command = "task " + command;
+    system (command.c_str ());
+
+    // Deliberately ignoreѕ taskwarrior exit status, otherwise empty filters
+    // cause the shell to terminate.
+  }
 
   return status;
 }

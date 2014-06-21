@@ -38,7 +38,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int cmdDiagnostics ()
 {
-  std::cout << "diagnostics\n";
+  std::cout << "tasksh diagnostics\n";
 
   // TODO Version
   // TODO Platform
