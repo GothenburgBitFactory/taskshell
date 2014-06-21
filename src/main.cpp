@@ -35,14 +35,18 @@
 #include <readline/history.h>
 #endif
 
+// tasksh commands.
 int cmdHelp ();
 int cmdDiagnostics ();
+std::string composePrompt ();
 
 ////////////////////////////////////////////////////////////////////////////////
 static int commandLoop ()
 {
-  // TODO Compose prompt.
-  std::string prompt = "task> ";
+  // TODO Local data: timer, context stack.  No globals.
+
+  // Compose the prompt.
+  std::string prompt = composePrompt ();
 
   // Display prompt, get input.
   char *line_read = readline (prompt.c_str ());
