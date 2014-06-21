@@ -71,11 +71,14 @@ static int commandLoop ()
   std::string command (line_read);
   free (line_read);
 #else
-  // TODO When Ctrl-D is pressed, it closeѕ std::cin, which causes this loop
-  //      to cycle very quickly with no input. Perhaps reopen std::cin?
   std::cout << prompt;
   std::string command;
   std::getline (std::cin, command);
+  if (std::cin.eof () == 1)
+  {
+    std::cout << "\n";
+    return 4;
+  }
 #endif
 
   // Dispatch command
@@ -84,7 +87,7 @@ static int commandLoop ()
   else if (closeEnough ("quit",        command, 3)) status = 1;
   else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
   else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
-  else
+  else if (command != "")
   {
     std::cout << "[task " << command << "]\n";
     command = "task " + command;
