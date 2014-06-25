@@ -4,7 +4,7 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/test
                      ${TASKSH_INCLUDE_DIRS})
 
-set (test_SRCS color.t path.t)
+set (test_SRCS color.t path.t file.t)
 
 message ("-- Configuring run_all")
 if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -36,6 +36,7 @@ foreach (src_FILE ${test_SRCS})
   add_executable (${src_FILE} "${src_FILE}.cpp"
                               ../src/Color.cpp
                               ../src/Path.cpp
+                              ../src/File.cpp
                               ../src/text.cpp
                               test.cpp)
   target_link_libraries (${src_FILE} ${TASKSH_LIBRARIES})

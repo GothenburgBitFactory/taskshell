@@ -26,12 +26,9 @@
 
 #include <cmake.h>
 #include <stdlib.h>
-#include <Context.h>
 #include <File.h>
 #include <Directory.h>
 #include <test.h>
-
-Context context;
 
 int main (int argc, char** argv)
 {
