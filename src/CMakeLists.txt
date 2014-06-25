@@ -9,6 +9,7 @@ set (tasksh_SRCS diag.cpp
                  Color.cpp Color.h
                  Path.cpp Path.h
                  File.cpp File.h
+                 Directory.cpp Directory.h
                  text.cpp  text.h)
 
 add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
