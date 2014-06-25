@@ -109,5 +109,8 @@
 // Color
 #define STRING_COLOR_UNRECOGNIZED    "The color '{1}' is not recognized."
 
+// File
+#define STRING_FILE_PERMS            "Tasksh does not have the correct permissions for '{1}'."
+
 #endif
 
