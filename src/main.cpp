@@ -61,7 +61,7 @@ static int commandLoop ()
   if (! line_read)
   {
     std::cout << "\n";
-    return 1;
+    return -1;
   }
 
   // Save history.
@@ -77,14 +77,14 @@ static int commandLoop ()
   if (std::cin.eof () == 1)
   {
     std::cout << "\n";
-    return 4;
+    return -1;
   }
 #endif
 
   // Dispatch command
   int status = 0;
-       if (closeEnough ("exit",        command, 3)) status = 1;
-  else if (closeEnough ("quit",        command, 3)) status = 1;
+       if (closeEnough ("exit",        command, 3)) status = -1;
+  else if (closeEnough ("quit",        command, 3)) status = -1;
   else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
   else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
   else if (command != "")
@@ -131,7 +131,9 @@ int main (int argc, const char** argv)
     }
   }
 
-  return status;
+  // Returning -1 drops out of the command loop, but gets translated to 0 here,
+  // so that there is a clean way to exit.
+  return status == -1 ? 0 : status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
