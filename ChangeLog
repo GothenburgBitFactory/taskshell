@@ -1,5 +1,6 @@
 0.9 () -
 
+- TS-2 tasksh segfaults if quotes not closed (thanks to Fidel Mato).
 - TS-13 Quotes included when using task shell (thanks to Kevin Gunn).
 - libreadline support added for line editing and command history.
 
