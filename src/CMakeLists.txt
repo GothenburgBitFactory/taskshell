@@ -7,6 +7,7 @@ set (tasksh_SRCS diag.cpp
                  help.cpp
                  prompt.cpp
                  Color.cpp Color.h
+                 Path.cpp Path.h
                  text.cpp  text.h)
 
 add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
