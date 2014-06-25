@@ -26,7 +26,10 @@
 
 #include <cmake.h>
 #include <iostream>
+#include <string>
+#include <vector>
 #include <cstring>
+#include <File.h>
 #include <i18n.h>
 #include <text.h>
 
@@ -38,13 +41,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 int cmdDiagnostics ()
 {
-  std::cout << "tasksh diagnostics\n";
-
   // TODO Version
   // TODO Platform
   // TODO pthreads
   // TODO libreadline
-  // TODO Taskwarrior version + location
+
+  // Taskwarrior version + location
+  std::string path (getenv ("PATH"));
+  std::cout << "PATH " << path << "\n";
+
+  std::vector <std::string> paths;
+  split (paths, path, ':');
+
+  std::vector <std::string>::iterator i;
+  for (i = paths.begin (); i != paths.end (); ++i)
+  {
+    File task (*i + "/task");
+    if (task.exists ())
+    {
+      std::cout << "Taskwarrior " << (*i + "/task") << "\n";
+    }
+  }
 
   return 0;
 }
