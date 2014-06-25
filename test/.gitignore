@@ -3,3 +3,4 @@ all.log
 color.t
 path.t
 file.t
+directory.t

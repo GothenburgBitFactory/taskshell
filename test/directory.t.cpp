@@ -27,11 +27,8 @@
 #include <cmake.h>
 #include <algorithm>
 #include <stdlib.h>
-#include <Context.h>
 #include <Directory.h>
 #include <test.h>
-
-Context context;
 
 int main (int argc, char** argv)
 {
