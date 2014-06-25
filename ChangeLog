@@ -3,6 +3,7 @@
 - TS-1 Apostrophe inside tasksh 'log' causes segmentation fault (thanks to
        David Stahl).
 - TS-2 tasksh segfaults if quotes not closed (thanks to Fidel Mato).
+- TS-5 tasksh segfaults (thanks to David Patrick).
 - TS-13 Quotes included when using task shell (thanks to Kevin Gunn).
 - libreadline support added for line editing and command history.
 
