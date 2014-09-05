@@ -29,6 +29,7 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <stdlib.h>
 #include <File.h>
 #include <i18n.h>
 #include <text.h>
