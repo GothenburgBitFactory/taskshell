@@ -97,28 +97,27 @@ Copyright (C) 2006 \- 2014 P. Beckingham, F. Hernandez.
 
 This man page was originally written by Federico Hernandez.
 
-Taskwarrior is distributed under the MIT license. See
+Tasksh is distributed under the MIT license. See
 http://www.opensource.org/licenses/mit-license.php for more information.
 
 .SH SEE ALSO
 .BR task(1),
 
-For more information regarding taskwarrior, see the following:
+For more information regarding tasksh, see the following:
 
 .TP
 The official site at
-<http://taskwarrior.org>
+<http://taskwarrior.org/tools>
 
 .TP
 The official code repository at
-<https://git.tasktools.org/scm/tm/task.git>
+<https://git.tasktools.org/scm/ex/tasksh.git>
 
 .TP
 You can contact the project by emailing
-<support@taskwarrior.org>
+<support@tasktools.org>
 
 .SH REPORTING BUGS
 .TP
-Bugs in taskwarrior may be reported to the issue-tracker at
-<http://taskwarrior.org>
-
+Bugs in tasksh may be reported to the issue-tracker at
+<http://bugi.tasktools.org>
