@@ -30,6 +30,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 std::string composePrompt ()
 {
+  // TODO The prompt should be composed of two elements:
+  // TODO - The configurable text
+  // TODO - The accumulated context, as colored tokens.
   return "task> ";
 }
 
