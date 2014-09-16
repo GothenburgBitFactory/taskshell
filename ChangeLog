@@ -1,4 +1,4 @@
-0.9 () -
+1.0.0 () -
 
 - TS-1 Apostrophe inside tasksh 'log' causes segmentation fault (thanks to
        David Stahl).
