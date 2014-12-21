@@ -29,27 +29,12 @@ use strict;
 use warnings;
 use Test::More tests => 2;
 
-# Ensure environment has no influence.
-#delete $ENV{'TASKDATA'};
-#delete $ENV{'TASKRC'};
-
 use File::Basename;
 my $ut = basename ($0);
-#my $rc = $ut . '.rc';
-
-# Create the rc file.
-#if (open my $fh, '>', $rc)
-#{
-#  print $fh "data.location=.\n",
-#            "confirmation=off\n";
-#  close $fh;
-#}
 
 # Bug <id> - <description>
 my $output = qx{../src/tasksh --version 2>&1};
 ok ($? == 0, "$ut: version check");
-like ($output, qr/0.9.0.dev/ms, "$ut: tasksh version found");
+like ($output, qr/^\d\.\d\.\d(?:\.beta\d)$/ms, "$ut: tasksh version found");
 
-# Cleanup.
-#unlink qw(), $rc;
 exit 0;
