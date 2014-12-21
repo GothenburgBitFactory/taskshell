@@ -11,25 +11,30 @@ tasksh \- Interactive taskwarrior shell
 .B tasksh --help
 
 .SH DESCRIPTION
-The tasksh program can be used to create a more immersive task environment.
-Any task command you run outside the shell can also be run inside the shell,
-without the need to prefix every command with "task".
+The tasksh program can be used to create a more immersive taskwarrior
+environment.  Any task command you run outside the shell can also be run inside
+the shell, without the need to prefix every command with "task".
 
-.RS
+When built with libreadline, tasksh provides command editing and history.
+
+Tasksh supports all recent versions of Taskwarrior.
+
+.SH COMMANDS
+Tasksh supports the following commands.  All other commands are passed intact to
+Taskwarrior.
+
+.TP
+.B exit/quit/Ctrl-D
+These commands cause tasksh to terminate.
+
+.TP
+.B diagnostics
+Displays settings pertinent to tasksh.
+
+.SH USAGE
+Here is an example tasksh session.
+
 $ tasksh
-.br
-.B task 2.4.0
-shell
-.br
-
-.br
-Enter any task command (such as 'list'), or hit 'Enter'.
-.br
-There is no need to include the 'task' command itself.
-.br
-Enter 'quit' to end the session.
-.br
-
 .br
 task> projects
 .br
@@ -90,8 +95,6 @@ ID Project Pri Due        Active Age   Description
  $
 .br
 
-.RE
-
 .SH "CREDITS & COPYRIGHTS"
 Copyright (C) 2006 \- 2014 P. Beckingham, F. Hernandez.
 
@@ -120,4 +123,5 @@ You can contact the project by emailing
 .SH REPORTING BUGS
 .TP
 Bugs in tasksh may be reported to the issue-tracker at
-<http://bugi.tasktools.org>
+<http://bug.tasktools.org>
+
