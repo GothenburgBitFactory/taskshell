@@ -25,24 +25,65 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
+#include <iostream> // TODO Remove.
 #include <vector>
 #include <string>
+#include <Color.h>
 
-std::string composeContexts (std::vector <std::string>&, bool plain = true);
+static const char* contextColors[] =
+{
+  "bold white on red",
+  "bold white on blue",
+  "bold white on green",
+  "bold white on magenta",
+  "black on cyan",
+  "black on yellow",
+  "black on white",
+};
+
+#define NUM_COLORS (sizeof contextColors)
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string composePrompt (std::vector <std::string>& contexts)
+int cmdClear (std::vector <std::string>& contexts)
 {
-  // TODO The prompt may be composed of different elements:
-  // TODO - The configurable text
-  // TODO - The accumulated context, as colored tokens.
-  // TODO - sync status
-  // TODO - time
-  std::string decoration = composeContexts (contexts, true);
-  if (decoration.length ())
-    return "task " + composeContexts (contexts, true) + " > ";
+  contexts.clear ();
+  return 0;
+}
 
-  return "task> ";
+////////////////////////////////////////////////////////////////////////////////
+int cmdLeave (std::vector <std::string>& contexts)
+{
+  if (contexts.size ())
+    contexts.pop_back ();
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int cmdContext (
+  const std::vector <std::string>& args,
+  std::vector <std::string>& contexts)
+{
+  // TODO Verify context not already in use.
+  if (args.size () > 1)
+    contexts.push_back (args[1]);
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string composeContexts (
+  std::vector <std::string>& contexts,
+  bool pretty /* = false */)
+{
+  std::string combined;
+  for (int i = 0; i < contexts.size (); ++i)
+    combined += (i ? " " : "")
+              + (pretty
+                   ? Color::colorize (" " + contexts[i] + " ", contextColors[i % NUM_COLORS])
+                   : contexts[i]);
+
+  return combined;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

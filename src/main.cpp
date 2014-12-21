@@ -26,6 +26,7 @@
 
 #include <cmake.h>
 #include <iostream>
+#include <vector>
 #include <string>
 #include <cstring>
 #include <stdlib.h>
@@ -42,18 +43,20 @@
 //      a 'task' prefix could disambiguate.
 
 // tasksh commands.
-int cmdHelp ();
-int cmdDiagnostics ();
-std::string composePrompt ();
+int cmdHelp (const std::vector <std::string>&);
+int cmdDiagnostics (const std::vector <std::string>&);
+int cmdContext (const std::vector <std::string>&, std::vector <std::string>&);
+int cmdClear (std::vector <std::string>&);
+int cmdLeave (std::vector <std::string>&);
+std::string composePrompt (std::vector <std::string>&);
+std::string composeContexts (std::vector <std::string>&, bool pretty = false);
 std::string findTaskwarrior ();
 
 ////////////////////////////////////////////////////////////////////////////////
-static int commandLoop ()
+static int commandLoop (std::vector <std::string>& contexts)
 {
-  // TODO Local data: timer, context stack.  No globals.
-
   // Compose the prompt.
-  std::string prompt = composePrompt ();
+  std::string prompt = composePrompt (contexts);
 
   // Display prompt, get input.
 #ifdef HAVE_READLINE
@@ -81,16 +84,22 @@ static int commandLoop ()
   }
 #endif
 
+  std::vector <std::string> args;
+  split (args, command, ' ');
+
   // Dispatch command
   int status = 0;
-       if (closeEnough ("exit",        command, 3)) status = -1;
-  else if (closeEnough ("quit",        command, 3)) status = -1;
-  else if (closeEnough ("help",        command, 3)) status = cmdHelp ();
-  else if (closeEnough ("diagnostics", command, 3)) status = cmdDiagnostics ();
+       if (closeEnough ("exit",        args[0], 3)) status = -1;
+  else if (closeEnough ("quit",        args[0], 3)) status = -1;
+  else if (closeEnough ("help",        args[0], 3)) status = cmdHelp        (args          );
+  else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics (args          );
+  else if (closeEnough ("context",     args[0], 3)) status = cmdContext     (args, contexts);
+  else if (closeEnough ("clear",       args[0], 3)) status = cmdClear       (      contexts);
+  else if (closeEnough ("leave",       args[0], 3)) status = cmdLeave       (      contexts);
   else if (command != "")
   {
+    command = "task " + composeContexts (contexts) + " " + command;
     std::cout << "[task " << command << "]\n";
-    command = "task " + command;
     system (command.c_str ());
 
     // Deliberately ignoreѕ taskwarrior exit status, otherwise empty filters
@@ -114,7 +123,8 @@ int main (int argc, const char** argv)
   {
     try
     {
-      while ((status = commandLoop ()) == 0)
+      std::vector <std::string> contexts;
+      while ((status = commandLoop (contexts)) == 0)
         ;
     }
 

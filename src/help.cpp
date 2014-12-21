@@ -31,11 +31,9 @@
 #include <text.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdHelp ()
+int cmdHelp (const std::vector <std::string>& args)
 {
-  // TODO This needs some work.
-  std::cout << "tasksh help\n";
-
+  std::cout << "Run 'man tasksh' for help.\n";
   return 0;
 }
 
