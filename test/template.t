@@ -35,6 +35,6 @@ my $ut = basename ($0);
 # Bug <id> - <description>
 my $output = qx{../src/tasksh --version 2>&1};
 ok ($? == 0, "$ut: version check");
-like ($output, qr/^\d\.\d\.\d(?:\.beta\d)$/ms, "$ut: tasksh version found");
+like ($output, qr/^\d\.\d\.\d(?:\.beta\d)?$/ms, "$ut: tasksh version found");
 
 exit 0;
