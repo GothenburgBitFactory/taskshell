@@ -41,7 +41,7 @@ static const char* contextColors[] =
   "black on white",
 };
 
-#define NUM_COLORS (sizeof contextColors)
+#define NUM_COLORS (sizeof (contextColors) / sizeof (contextColors[0]))
 
 ////////////////////////////////////////////////////////////////////////////////
 int cmdClear (std::vector <std::string>& contexts)
@@ -78,10 +78,23 @@ std::string composeContexts (
 {
   std::string combined;
   for (int i = 0; i < contexts.size (); ++i)
-    combined += (i ? " " : "")
-              + (pretty
-                   ? Color::colorize (" " + contexts[i] + " ", contextColors[i % NUM_COLORS])
-                   : contexts[i]);
+  {
+    if (pretty)
+    {
+      combined += (i ? " " : "")
+                + std::string ("\001")
+                + Color::colorize ("\002 " + contexts[i] + " \001", contextColors[i % NUM_COLORS])
+                + "\002";
+
+    }
+    else
+    {
+      combined += (i ? " " : "") + contexts[i];
+    }
+  }
+
+  if (combined != "")
+    combined += ' ';
 
   return combined;
 }

@@ -40,7 +40,7 @@ std::string composePrompt (std::vector <std::string>& contexts)
   // TODO - time
   std::string decoration = composeContexts (contexts, true);
   if (decoration.length ())
-    return "task " + composeContexts (contexts, true) + " > ";
+    return "task " + composeContexts (contexts, true) + "> ";
 
   return "task> ";
 }

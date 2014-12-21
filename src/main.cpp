@@ -84,26 +84,29 @@ static int commandLoop (std::vector <std::string>& contexts)
   }
 #endif
 
-  std::vector <std::string> args;
-  split (args, command, ' ');
-
-  // Dispatch command
   int status = 0;
-       if (closeEnough ("exit",        args[0], 3)) status = -1;
-  else if (closeEnough ("quit",        args[0], 3)) status = -1;
-  else if (closeEnough ("help",        args[0], 3)) status = cmdHelp        (args          );
-  else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics (args          );
-  else if (closeEnough ("context",     args[0], 3)) status = cmdContext     (args, contexts);
-  else if (closeEnough ("clear",       args[0], 3)) status = cmdClear       (      contexts);
-  else if (closeEnough ("leave",       args[0], 3)) status = cmdLeave       (      contexts);
-  else if (command != "")
+  if (command != "")
   {
-    command = "task " + composeContexts (contexts) + " " + command;
-    std::cout << "[task " << command << "]\n";
-    system (command.c_str ());
+    std::vector <std::string> args;
+    split (args, command, ' ');
 
-    // Deliberately ignoreѕ taskwarrior exit status, otherwise empty filters
-    // cause the shell to terminate.
+    // Dispatch command
+         if (closeEnough ("exit",        args[0], 3)) status = -1;
+    else if (closeEnough ("quit",        args[0], 3)) status = -1;
+    else if (closeEnough ("help",        args[0], 3)) status = cmdHelp        (args          );
+    else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics (args          );
+    else if (closeEnough ("context",     args[0], 3)) status = cmdContext     (args, contexts);
+    else if (closeEnough ("clear",       args[0], 3)) status = cmdClear       (      contexts);
+    else if (closeEnough ("leave",       args[0], 3)) status = cmdLeave       (      contexts);
+    else if (command != "")
+    {
+      command = "task " + composeContexts (contexts) + command;
+      std::cout << "[task " << command << "]\n";
+      system (command.c_str ());
+
+      // Deliberately ignoreѕ taskwarrior exit status, otherwise empty filters
+      // cause the shell to terminate.
+    }
   }
 
   return status;
