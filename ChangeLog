@@ -1,3 +1,7 @@
+1.1.0 () -
+
+------ current release ---------------------------
+
 1.0.0 (2014-12-21) 5934dfcefac6d037a359bc733a8382e42e32552e
 
 - TS-1 Apostrophe inside tasksh 'log' causes segmentation fault (thanks to
@@ -7,7 +11,7 @@
 - TS-13 Quotes included when using task shell (thanks to Kevin Gunn).
 - libreadline support added for line editing and command history.
 
-Project started 2014-06-08
-
 ------ start -----------------------------------
+
+Project started 2014-06-08
 
