@@ -28,8 +28,21 @@ Taskwarrior.
 These commands cause tasksh to terminate.
 
 .TP
+.B clear
+Removeѕ all contexts.
+
+.TP
+.B context project:Home
+Adds a new context to the list, in this example the 'Home' project. Every
+command for Taskwarrior then get the context terms added to the query.
+
+.TP
 .B diagnostics
 Displays settings pertinent to tasksh.
+
+.TP
+.B leave
+Removed the most recently added context.
 
 .SH USAGE
 Here is an example tasksh session.

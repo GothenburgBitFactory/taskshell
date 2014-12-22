@@ -1,4 +1,6 @@
 1.1.0 () -
+- Added 'context', 'leave' and 'clear' commands for adding, removing and
+  clearing contexts.
 
 ------ current release ---------------------------
 
