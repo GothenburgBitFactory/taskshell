@@ -1,25 +1,18 @@
 
-New Features in tasksh 1.0
+New Features in tasksh 1.1.0
 
-  - libreadline support.  Actually, the only feature.
 
-New commands in tasksh 1.0
+New commands in tasksh 1.1.0
 
-  - 'exit', 'quit' or Ctrl-D exits the shell
-  - 'diagnostics' shows $PATH and where it found Taskwarrior
-  - 'help' references the man page
 
-New configuration options in tasksh 1.0
+New configuration options in tasksh 1.1.0
 
-  - None
 
-Newly deprecated features in tasksh 1.0
+Newly deprecated features in tasksh 1.1.0
 
-  - None
 
-Removed features in 1.0
+Removed features in 1.1.0
 
-  - None
 
 Known Issues
 
