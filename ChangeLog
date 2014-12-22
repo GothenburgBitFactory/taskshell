@@ -2,6 +2,7 @@
 - TS-7 Stateful shell feature: previously selected filter (thanks to Ben
        Armstrong).
 - TS-10 Context support (thanks to David Patrick).
+- TS-12 Task focus (thanks to John Florian).
 - Added 'context', 'leave' and 'clear' commands for adding, removing and
   clearing contexts.
 
