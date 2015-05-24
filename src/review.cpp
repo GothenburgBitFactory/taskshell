@@ -25,12 +25,101 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
+#include <iostream>
 #include <vector>
 #include <string>
+
+#ifdef HAVE_READLINE
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
+////////////////////////////////////////////////////////////////////////////////
+static int reviewLoop (const std::string& uuid)
+{
+  // TODO Add prompt context '<ID> (<n> of <total>)'
+  // TODO Present options '(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit'
+  std::string prompt = "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ";
+
+  // TODO Run 'info' report for task
+
+  // Display prompt, get input.
+#ifdef HAVE_READLINE
+  char *line_read = readline (prompt.c_str ());
+  if (! line_read)
+  {
+    std::cout << "\n";
+    return -1;
+  }
+
+  // Save history.
+  if (*line_read)
+    add_history (line_read);
+
+  std::string command (line_read);
+  free (line_read);
+#else
+  std::cout << prompt;
+  std::string command;
+  std::getline (std::cin, command);
+  if (std::cin.eof () == 1)
+  {
+    std::cout << "\n";
+    return -1;
+  }
+#endif
+
+  int status = 0;
+  if (command == "")
+  {
+    // TODO S --> nop
+  }
+  else if (command == "e")
+  {
+    // TODO E --> task edit <UUID>
+  }
+  else if (command == "r")
+  {
+    // TODO R --> task <UUID> modify reviewed:now
+  }
+  else if (command == "c")
+  {
+    // TODO C --> task <UUID> done
+  }
+  else if (command == "d")
+  {
+    // TODO D --> task rc.confirmation:no <UUID> delete
+  }
+  else if (command == "q")
+  {
+    // TODO Q --> end review
+    status = 1;
+  }
+
+  // TODO Remove prompt context.
+
+  return status;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 int cmdReview (const std::vector <std::string>& args)
 {
+  // TODO Configure 'reviewed' UDA, if necessary.
+  // TODO Generate list of tasks.
+  //      - status 'Pending' or 'Waiting'
+  //      - 'reviewed' attribute older than 'now - rc.review.period'
+  //      - apply <filter>, if specified
+  //      - sort by ascending 'reviewed' date
+  std::vector <std::string> uuids;
+  uuids.push_back ("one");
+  uuids.push_back ("two");
+
+  // TODO Iterate over each task in the list.
+
+  for (auto& uuid : uuids)
+    while (reviewLoop (uuid) == 0)
+      ;
+
   return 0;
 }
 
