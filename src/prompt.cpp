@@ -73,7 +73,7 @@ int promptAdd (const std::string& context)
 std::string composeContexts (bool pretty /* = false */)
 {
   std::string combined;
-  for (int i = 0; i < contexts.size (); ++i)
+  for (unsigned int i = 0; i < contexts.size (); ++i)
   {
     if (pretty)
     {
