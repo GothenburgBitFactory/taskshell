@@ -3,10 +3,10 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src
                      ${TASKSH_INCLUDE_DIRS})
 
-set (tasksh_SRCS context.cpp
-                 diag.cpp
+set (tasksh_SRCS diag.cpp
                  help.cpp
                  prompt.cpp
+                 review.cpp
                  Color.cpp Color.h
                  Path.cpp Path.h
                  File.cpp File.h

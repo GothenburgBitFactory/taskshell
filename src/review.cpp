@@ -25,78 +25,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
-#include <iostream> // TODO Remove.
 #include <vector>
 #include <string>
-#include <Color.h>
-
-static const char* contextColors[] =
-{
-  "bold white on red",
-  "bold white on blue",
-  "bold white on green",
-  "bold white on magenta",
-  "black on cyan",
-  "black on yellow",
-  "black on white",
-};
-
-#define NUM_COLORS (sizeof (contextColors) / sizeof (contextColors[0]))
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdClear (std::vector <std::string>& contexts)
+int cmdReview (const std::vector <std::string>& args)
 {
-  contexts.clear ();
   return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-int cmdLeave (std::vector <std::string>& contexts)
-{
-  if (contexts.size ())
-    contexts.pop_back ();
-
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-int cmdContext (
-  const std::vector <std::string>& args,
-  std::vector <std::string>& contexts)
-{
-  // TODO Verify context not already in use.
-  if (args.size () > 1)
-    contexts.push_back (args[1]);
-
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-std::string composeContexts (
-  std::vector <std::string>& contexts,
-  bool pretty /* = false */)
-{
-  std::string combined;
-  for (int i = 0; i < contexts.size (); ++i)
-  {
-    if (pretty)
-    {
-      combined += (i ? " " : "")
-                + std::string ("\001")
-                + Color::colorize ("\002 " + contexts[i] + " \001", contextColors[i % NUM_COLORS])
-                + "\002";
-
-    }
-    else
-    {
-      combined += (i ? " " : "") + contexts[i];
-    }
-  }
-
-  if (combined != "")
-    combined += ' ';
-
-  return combined;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

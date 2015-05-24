@@ -27,20 +27,85 @@
 #include <cmake.h>
 #include <vector>
 #include <string>
+#include <Color.h>
 
-std::string composeContexts (std::vector <std::string>&, bool plain = true);
+static const char* contextColors[] =
+{
+  "bold white on red",
+  "bold white on blue",
+  "bold white on green",
+  "bold white on magenta",
+  "black on cyan",
+  "black on yellow",
+  "black on white",
+};
+
+#define NUM_COLORS (sizeof (contextColors) / sizeof (contextColors[0]))
+
+static std::vector <std::string> contexts;
+
+std::string composeContexts (bool pretty = false);
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string composePrompt (std::vector <std::string>& contexts)
+int promptClear ()
+{
+  contexts.clear ();
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int promptRemove ()
+{
+  if (contexts.size ())
+    contexts.pop_back ();
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int promptAdd (const std::string& context)
+{
+  contexts.push_back (context);
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string composeContexts (bool pretty /* = false */)
+{
+  std::string combined;
+  for (int i = 0; i < contexts.size (); ++i)
+  {
+    if (pretty)
+    {
+      combined += (i ? " " : "")
+                + std::string ("\001")
+                + Color::colorize ("\002 " + contexts[i] + " \001", contextColors[i % NUM_COLORS])
+                + "\002";
+
+    }
+    else
+    {
+      combined += (i ? " " : "") + contexts[i];
+    }
+  }
+
+  if (combined != "")
+    combined += ' ';
+
+  return combined;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string promptCompose ()
 {
   // TODO The prompt may be composed of different elements:
   // TODO - The configurable text
   // TODO - The accumulated context, as colored tokens.
   // TODO - sync status
   // TODO - time
-  std::string decoration = composeContexts (contexts, true);
+  std::string decoration = composeContexts (true);
   if (decoration.length ())
-    return "task " + composeContexts (contexts, true) + "> ";
+    return "task " + composeContexts (true) + "> ";
 
   return "task> ";
 }
