@@ -11,7 +11,8 @@ set (tasksh_SRCS diag.cpp
                  Path.cpp Path.h
                  File.cpp File.h
                  Directory.cpp Directory.h
-                 text.cpp  text.h)
+                 text.cpp text.h
+                 util.cpp util.h)
 
 add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
 target_link_libraries (tasksh_executable ${TASKSH_LIBRARIES})
