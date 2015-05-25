@@ -36,6 +36,7 @@
 
 #include <text.h>
 #include <util.h>
+#include <i18n.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string getResponse (const std::string& prompt)

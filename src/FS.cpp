@@ -389,7 +389,7 @@ bool File::open ()
       bool already_exists = exists ();
       if (already_exists)
         if (!readable () || !writable ())
-          throw std::string (format ("Missing permissions for '{1}'", _data));
+          throw std::string (format (STRING_FS_PERMS, _data));
 
       _fh = fopen (_data.c_str (), (already_exists ? "r+" : "w+"));
       if (_fh)

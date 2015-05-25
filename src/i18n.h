@@ -43,7 +43,7 @@
 // Translators:
 //   Add more, as appropriate.
 #if PACKAGE_LANGUAGE == LANGUAGE_ENG_USA
-#include <eng-USA.h>
+#include <l10n/eng-USA.h>
 #endif
 
 #define CCOLOR_BOLD             500
