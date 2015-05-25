@@ -26,6 +26,7 @@
 
 #include <cmake.h>
 #include <algorithm>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <strings.h>
@@ -111,6 +112,14 @@ bool closeEnough (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+const std::string format (int value)
+{
+  std::stringstream s;
+  s << value;
+  return s.str ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 static void replace_positional (
   std::string& fmt,
   const std::string& from,
@@ -131,6 +140,18 @@ const std::string format (
 {
   std::string output = fmt;
   replace_positional (output, "{1}", arg1);
+  return output;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+const std::string format (
+  const std::string& fmt,
+  int arg1,
+  int arg2)
+{
+  std::string output = fmt;
+  replace_positional (output, "{1}", format (arg1));
+  replace_positional (output, "{2}", format (arg2));
   return output;
 }
 

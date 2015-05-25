@@ -37,7 +37,9 @@ void split (std::vector<std::string>&, const std::string&, const char);
 std::string lowerCase (const std::string&);
 bool compare (const std::string&, const std::string&, bool sensitive = true);
 bool closeEnough (const std::string&, const std::string&, unsigned int minLength = 0);
+const std::string format (int);
 const std::string format (const std::string&, const std::string&);
+const std::string format (const std::string&, int, int);
 
 #endif
 ////////////////////////////////////////////////////////////////////////////////
