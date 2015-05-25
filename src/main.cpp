@@ -50,10 +50,9 @@ std::string promptCompose ();
 std::string findTaskwarrior ();
 
 ////////////////////////////////////////////////////////////////////////////////
-static int commandLoop ()
+const std::string getResponse (const std::string& prompt)
 {
-  // Compose the prompt.
-  std::string prompt = promptCompose ();
+  std::string response {""};
 
   // Display prompt, get input.
 #ifdef HAVE_READLINE
@@ -61,25 +60,36 @@ static int commandLoop ()
   if (! line_read)
   {
     std::cout << "\n";
-    return -1;
   }
+  else
+  {
+    // Save history.
+    if (*line_read)
+      add_history (line_read);
 
-  // Save history.
-  if (*line_read)
-    add_history (line_read);
-
-  std::string command (line_read);
-  free (line_read);
+    response = std::string (line_read);
+    free (line_read);
+  }
 #else
   std::cout << prompt;
-  std::string command;
-  std::getline (std::cin, command);
+  std::getline (std::cin, response);
   if (std::cin.eof () == 1)
   {
     std::cout << "\n";
-    return -1;
   }
 #endif
+
+  return response;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+static int commandLoop ()
+{
+  // Compose the prompt.
+  std::string prompt = promptCompose ();
+
+  // Display prompt, get input.
+  std::string command = getResponse (prompt);
 
   int status = 0;
   if (command != "")

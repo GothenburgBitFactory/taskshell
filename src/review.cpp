@@ -38,38 +38,7 @@
 #include <util.h>
 #include <i18n.h>
 
-////////////////////////////////////////////////////////////////////////////////
-static const std::string getResponse (const std::string& prompt)
-{
-  std::string response {""};
-
-  // Display prompt, get input.
-#ifdef HAVE_READLINE
-  char *line_read = readline (prompt.c_str ());
-  if (! line_read)
-  {
-    std::cout << "\n";
-  }
-  else
-  {
-    // Save history.
-    if (*line_read)
-      add_history (line_read);
-
-    response = std::string (line_read);
-    free (line_read);
-  }
-#else
-  std::cout << prompt;
-  std::getline (std::cin, response);
-  if (std::cin.eof () == 1)
-  {
-    std::cout << "\n";
-  }
-#endif
-
-  return response;
-}
+std::string getResponse (const std::string&);
 
 ////////////////////////////////////////////////////////////////////////////////
 static void editTask (const std::string& uuid)
