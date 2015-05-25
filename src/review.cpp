@@ -28,6 +28,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stdlib.h>
 
 #ifdef HAVE_READLINE
 #include <readline/readline.h>

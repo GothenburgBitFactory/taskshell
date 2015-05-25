@@ -32,17 +32,11 @@
 #endif
 #include <stdio.h>
 #include <vector>
-//#include <algorithm>
 #include <cstring>
 #include <string>
-//#include <stdint.h>
-//#include <sys/types.h>
-//#include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-//#include <string.h>
-//#include <pwd.h>
 #include <errno.h>
 #include <signal.h>
 #include <sys/select.h>
