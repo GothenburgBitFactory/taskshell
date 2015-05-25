@@ -40,7 +40,7 @@
 //#include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 //#include <string.h>
 //#include <pwd.h>
 #include <errno.h>
