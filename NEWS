@@ -1,13 +1,11 @@
 
 New Features in tasksh 1.1.0
 
-  - Context support
+  - Review support
 
 New commands in tasksh 1.1.0
 
-  - 'context' command adds a context, which is a filter term
-  - 'leave' removes the most recently added context
-  - 'clear' removes all contexts
+  - 'review' begins an interactive review session
 
 New configuration options in tasksh 1.1.0
 
