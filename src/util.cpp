@@ -25,14 +25,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
+// If <iostream> is included, put it after <stdio.h>, because it includes
+// <stdio.h>, and therefore would ignore the _WITH_GETLINE.
+#ifdef FREEBSD
+#define _WITH_GETLINE
+#endif
+#include <stdio.h>
 #include <vector>
+//#include <algorithm>
+#include <cstring>
 #include <string>
-#include <unistd.h>
-#include <sys/select.h>
+//#include <stdint.h>
+//#include <sys/types.h>
+//#include <sys/time.h>
 #include <sys/wait.h>
-#include <signal.h>
+#include <unistd.h>
+//#include <stdlib.h>
+//#include <string.h>
+//#include <pwd.h>
 #include <errno.h>
-#include <util.h>
+#include <signal.h>
+#include <sys/select.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Run a binary with args, capturing output.
