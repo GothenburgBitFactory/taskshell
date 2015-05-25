@@ -34,69 +34,87 @@
 #include <readline/history.h>
 #endif
 
+#include <text.h>
+#include <util.h>
+
 ////////////////////////////////////////////////////////////////////////////////
-static int reviewLoop (const std::string& uuid)
+static int reviewLoop (const std::vector <std::string>& uuids)
 {
-  // TODO Add prompt context '<ID> (<n> of <total>)'
-  // TODO Present options '(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit'
-  std::string prompt = "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ";
+  int status = 0;
 
-  // TODO Run 'info' report for task
+  for (unsigned int i = 0; i < uuids.size (); ++i)
+  {
+    auto uuid = uuids[i];
+    std::cout << "# [" << i << "] uuid '" << uuid << "'\n";
 
-  // Display prompt, get input.
+    // TODO Run 'info' report for task
+    std::string command = "task " + uuid + " information";
+    std::cout << "# [" << i << "] command '" << command << "'\n";
+    system (command.c_str ());
+
+    // TODO Add prompt context '<ID> (<n> of <total>)'
+    std::string prompt = "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ";
+
+    // Display prompt, get input.
 #ifdef HAVE_READLINE
-  char *line_read = readline (prompt.c_str ());
-  if (! line_read)
-  {
-    std::cout << "\n";
-    return -1;
-  }
+    char *line_read = readline (prompt.c_str ());
+    if (! line_read)
+    {
+      std::cout << "\n";
+      return -1;
+    }
 
-  // Save history.
-  if (*line_read)
-    add_history (line_read);
+    // Save history.
+    if (*line_read)
+      add_history (line_read);
 
-  std::string command (line_read);
-  free (line_read);
+    command = std::string (line_read);
+    std::cout << "# [" << i << "] command '" << command << "'\n";
+    free (line_read);
 #else
-  std::cout << prompt;
-  std::string command;
-  std::getline (std::cin, command);
-  if (std::cin.eof () == 1)
-  {
-    std::cout << "\n";
-    return -1;
-  }
+    std::cout << prompt;
+    std::getline (std::cin, command);
+    if (std::cin.eof () == 1)
+    {
+      std::cout << "\n";
+      return -1;
+    }
 #endif
 
-  int status = 0;
-  if (command == "")
-  {
-    // TODO S --> nop
-  }
-  else if (command == "e")
-  {
-    // TODO E --> task edit <UUID>
-  }
-  else if (command == "r")
-  {
-    // TODO R --> task <UUID> modify reviewed:now
-  }
-  else if (command == "c")
-  {
-    // TODO C --> task <UUID> done
-  }
-  else if (command == "d")
-  {
-    // TODO D --> task rc.confirmation:no <UUID> delete
-  }
-  else if (command == "q")
-  {
-    // TODO Q --> end review
-    status = 1;
-  }
+    if (command == "e") // task <uuid> edit
+    {
+      command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " edit";
+      system (command.c_str ());
 
-  // TODO Remove prompt context.
+      command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
+      system (command.c_str ());
+    }
+    else if (command == "r") // task <uuid> modify reviewed:now
+    {
+      command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
+      system (command.c_str ());
+    }
+    else if (command == "c") // task <uuid> done
+    {
+      command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " done";
+      system (command.c_str ());
+    }
+    else if (command == "d") // task rc.confirmation:no <uuid> delete
+    {
+      command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " delete";
+      system (command.c_str ());
+    }
+    else if (command == "q") // end
+    {
+      status = 1;
+      break;
+    }
+
+    // Note that just hitting <Enter> yields an empty command, which does
+    // nothing but advance to the next task.
+
+    // TODO Remove prompt context.
+  }
 
   return status;
 }
@@ -104,22 +122,53 @@ static int reviewLoop (const std::string& uuid)
 ////////////////////////////////////////////////////////////////////////////////
 int cmdReview (const std::vector <std::string>& args)
 {
-  // TODO Configure 'reviewed' UDA, if necessary.
+  // Configure 'reviewed' UDA, but only if necessary.
+  std::string input;
+  std::string output;
+  auto status = execute ("task",
+                         {"_get", "rc.uda.reviewed.type"},
+                         input,
+                         output);
+  if (status || output != "date\n")
+  {
+    execute ("task",
+             {"rc.confirmation:no",
+              "rc.verbose:nothing",
+              "config", "uda.reviewed.type", "date"},
+             input,
+             output);
+    execute ("task",
+             {"rc.confirmation:no",
+              "rc.verbose:nothing",
+              "config", "uda.reviewed.label", "Reviewed"},
+              input,
+              output);
+    execute ("task",
+             {"rc.confirmation:no",
+              "rc.verbose:nothing",
+              "config", "review.period", "1week"},
+              input,
+              output);
+  }
+
   // TODO Generate list of tasks.
-  //      - status 'Pending' or 'Waiting'
   //      - 'reviewed' attribute older than 'now - rc.review.period'
   //      - apply <filter>, if specified
-  //      - sort by ascending 'reviewed' date
+  status = execute ("task",
+                    {"rc.report.review_temp.columns:uuid",
+                     "rc.report.review_temp.sort:reviewed+",
+//                     "rc.report.review_temp.filter:reviewed.before:now-1week",
+                     "rc.verbose:nothing",
+                     "(", "+PENDING", "or", "+WAITING", ")",
+                     "review_temp"},
+                    input,
+                    output);
+  std::cout << "# output '" << output << "'\n";
+
+  // Iterate over each task in the list.
   std::vector <std::string> uuids;
-  uuids.push_back ("one");
-  uuids.push_back ("two");
-
-  // TODO Iterate over each task in the list.
-
-  for (auto& uuid : uuids)
-    while (reviewLoop (uuid) == 0)
-      ;
-
+  split (uuids, output, '\n');
+  reviewLoop (uuids);
   return 0;
 }
 
