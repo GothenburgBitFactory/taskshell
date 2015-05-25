@@ -79,7 +79,7 @@ static void editTask (const std::string& uuid)
 
   command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << "Modified\n";
+  std::cout << STRING_REVIEW_MODIFIED << "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ static void reviewTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << "Marked as reviewed\n";
+  std::cout << STRING_REVIEW_REVIEWED << "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ static void completeTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " done";
   system (command.c_str ());
-  std::cout << "Completed\n";
+  std::cout << STRING_REVIEW_COMPLETED << "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ static void deleteTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " delete";
   system (command.c_str ());
-  std::cout << "Deleted\n";
+  std::cout << STRING_REVIEW_DELETED << "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
     else if (command == "")  { std::cout << "Skipped\n"; ++current; }
     else
     {
-      std::cout << "Command '" << command << "' is not recognized.\n";
+      std::cout << format (STRING_REVIEW_UNRECOGNIZED, command) << "\n";
     }
 
     // Note that just hitting <Enter> yields an empty command, which does
@@ -146,11 +146,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
     // TODO Remove prompt context.
   }
 
-  std::cout << "End of review. "
-            << tasks
-            << " out of "
-            << total
-            << " tasks reviewed.\n";
+  std::cout << format (STRING_REVIEW_END, tasks, total) << "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -112,5 +112,13 @@
 // FS
 #define STRING_FS_PERMS              "Tasksh does not have the correct permissions for '{1}'."
 
+// Review
+#define STRING_REVIEW_MODIFIED       "Modified."
+#define STRING_REVIEW_REVIEWED       "Marked as reviewed."
+#define STRING_REVIEW_COMPLETED      "Completed."
+#define STRING_REVIEW_DELETED        "Deleted."
+#define STRING_REVIEW_UNRECOGNIZED   "Command '{1}' is not recognized."
+#define STRING_REVIEW_END            "End of review. {1} out of {2} tasks reviewed."
+
 #endif
 
