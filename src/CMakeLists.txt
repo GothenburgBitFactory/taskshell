@@ -8,9 +8,7 @@ set (tasksh_SRCS diag.cpp
                  prompt.cpp
                  review.cpp
                  Color.cpp Color.h
-                 Path.cpp Path.h
-                 File.cpp File.h
-                 Directory.cpp Directory.h
+                 FS.cpp FS.h
                  text.cpp text.h
                  util.cpp util.h)
 
