@@ -35,11 +35,41 @@
 #include <readline/history.h>
 #endif
 
+#include <unistd.h>
+#include <sys/ioctl.h>
+
+#ifdef SOLARIS
+#include <sys/termios.h>
+#endif
+
 #include <text.h>
 #include <util.h>
 #include <i18n.h>
 
 std::string getResponse (const std::string&);
+
+////////////////////////////////////////////////////////////////////////////////
+static unsigned int getWidth ()
+{
+  // Determine window size.
+//  int width = config.getInteger ("defaultwidth");
+  int width = 0;
+
+  if (width == 0)
+  {
+    unsigned short buff[4];
+    if (ioctl (STDOUT_FILENO, TIOCGWINSZ, &buff) != -1)
+      width = buff[1];
+  }
+
+  // Ncurses does this, and perhaps we need to as well, to avoid a problem on
+  // Cygwin where the display goes right up to the terminal width, and causes
+  // an odd color wrapping problem.
+//  if (config.getBoolean ("avoidlastcolumn"))
+//    --width;
+
+  return width;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 static void editTask (const std::string& uuid)
