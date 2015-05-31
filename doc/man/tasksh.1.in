@@ -99,6 +99,13 @@ ID Project Pri Due        Active Age   Description
  $
 .br
 
+.SH CONFIGURATION
+Tasksh piggybacks on Taskwarrior's .taskrc configuration file, and stores
+several settings there. If you use a non-standard location for your .task
+database, and .taskrc file, Tasksh will not find them unless you set the
+TASKDATA and TASKRC environment variables. See 'man taskrc' for more
+details.
+
 .SH "CREDITS & COPYRIGHTS"
 Copyright (C) 2006 \- 2015 P. Beckingham, F. Hernandez.
 
