@@ -178,7 +178,6 @@ static const std::string menu ()
 ////////////////////////////////////////////////////////////////////////////////
 static void reviewLoop (const std::vector <std::string>& uuids)
 {
-  auto tasks = 0;
   auto total = uuids.size ();
   auto width = getWidth ();
 
@@ -228,7 +227,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
   }
 
   std::cout << "\n"
-            << format (STRING_REVIEW_END, tasks, total)
+            << format (STRING_REVIEW_END, current, total)
             << "\n\n";
 }
 
