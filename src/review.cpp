@@ -26,6 +26,7 @@
 
 #include <cmake.h>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <stdlib.h>
@@ -42,6 +43,7 @@
 #include <sys/termios.h>
 #endif
 
+#include <Color.h>
 #include <text.h>
 #include <util.h>
 #include <i18n.h>
@@ -107,43 +109,67 @@ static void deleteTask (const std::string& uuid)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+static const std::string banner (
+  unsigned int current,
+  unsigned int total,
+  unsigned int width,
+  const std::string& message)
+{
+  std::stringstream out;
+  out << " ["
+      << current
+      << " of "
+      << total
+      << "] "
+      << message;
+
+  out << std::string (width - out.str ().length () - 1, ' ');
+
+  Color color ("white on blue");
+  return color.colorize (out.str ()) + "\n";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+static const std::string menu ()
+{
+  Color text ("white on blue");
+  return text.colorize (" (Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ");
+}
+
+////////////////////////////////////////////////////////////////////////////////
 static void reviewLoop (const std::vector <std::string>& uuids)
 {
   auto tasks = 0;
   auto total = uuids.size ();
+  auto width = getWidth ();
 
   unsigned int current = 0;
   while (current < total)
   {
-    auto uuid = uuids[current];
-    std::cout << "# [" << current << "] uuid '" << uuid << "'\n";
+    // Display banner for this task.
+    std::cout << banner (current + 1, total, width, "");
 
-    // TODO Run 'info' report for task
+    // Run 'info' report for task.
+    auto uuid = uuids[current];
     std::string command = "task " + uuid + " information";
-    std::cout << "# [" << current << "] command '" << command << "'\n";
     system (command.c_str ());
 
-    // TODO Add prompt context '<ID> (<n> of <total>)'
-    std::string prompt = "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ";
-
     // Display prompt, get input.
-    command = getResponse (prompt);
+    auto response = getResponse (menu ());
 
-         if (command == "e") { editTask (uuid);          ++current; }
-    else if (command == "r") { reviewTask (uuid);        ++current; }
-    else if (command == "c") { completeTask (uuid);      ++current; }
-    else if (command == "d") { deleteTask (uuid);        ++current; }
-    else if (command == "q") { break;                               }
-    else if (command == "")  { std::cout << "Skipped\n"; ++current; }
+         if (response == "e") { editTask (uuid);          ++current; }
+    else if (response == "r") { reviewTask (uuid);        ++current; }
+    else if (response == "c") { completeTask (uuid);      ++current; }
+    else if (response == "d") { deleteTask (uuid);        ++current; }
+    else if (response == "q") { break;                               }
+    else if (response == "")  { std::cout << "Skipped\n"; ++current; }
     else
     {
-      std::cout << format (STRING_REVIEW_UNRECOGNIZED, command) << "\n";
+      std::cout << format (STRING_REVIEW_UNRECOGNIZED, response) << "\n";
     }
 
     // Note that just hitting <Enter> yields an empty command, which does
     // nothing but advance to the next task.
-
-    // TODO Remove prompt context.
   }
 
   std::cout << format (STRING_REVIEW_END, tasks, total) << "\n";
@@ -161,9 +187,9 @@ int cmdReview (const std::vector <std::string>& args)
                          output);
   if (status || output != "date\n")
   {
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.type", "date"},      input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.type",  "date"},     input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.label", "Reviewed"}, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "review.period", "1week"},         input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "review.period",      "1week"},    input, output);
   }
 
   // Obtain a list of UUIDs to review.
