@@ -10,7 +10,9 @@ set (tasksh_SRCS diag.cpp
                  Color.cpp Color.h
                  FS.cpp FS.h
                  text.cpp text.h
-                 util.cpp util.h)
+                 utf8.cpp utf8.h
+                 util.cpp util.h
+                 wcwidth6.cpp)
 
 add_executable (tasksh_executable main.cpp ${tasksh_SRCS})
 target_link_libraries (tasksh_executable ${TASKSH_LIBRARIES})
