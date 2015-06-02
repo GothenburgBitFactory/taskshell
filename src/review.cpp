@@ -120,9 +120,23 @@ static const std::string reviewStart (
   unsigned int total,
   unsigned int width)
 {
-  return "\none\n"
-         "two\n"
-         "three\n\n";
+  std::string welcome =
+    "The review process is important for keeping your list accurate, so you are "
+    "working on the right thing.\n\n"
+
+    "For each task you are shown, look at the metadata. Determine whether the "
+    "task needs to be changed (enter 'e' to edit), or whether it is accurate "
+    "(enter 'r' to mark as reviewed). You may skip a task ('enter') but a "
+    "skipped task is not considered reviewed.\n\n"
+
+    "You may stop at any time, and resume later, right where you left off. "
+    "See 'man tasksh' for more details.";
+
+  std::vector <std::string> lines;
+  wrapText (lines, welcome, width, false);
+  join (welcome, "\n", lines);
+
+  return "\n" + welcome + "\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -132,28 +146,32 @@ static const std::string banner (
   unsigned int width,
   const std::string& message)
 {
-  std::stringstream out;
-  out << " ["
-      << current
-      << " of "
-      << total
-      << "] "
-      << message;
+  std::stringstream progress;
+  progress << " ["
+           << current
+           << " of "
+           << total
+           << "] ";
 
-  std::string composed = out.str ();
-  if (composed.length () < width)
-    composed += std::string (width - composed.length () - 1, ' ');
+  Color progressColor ("color15 on color9");
+  Color descColor     ("color15 on gray6");
+
+  std::string composed;
+  if (progress.str ().length () + message.length () + 1 < width)
+    composed = progressColor.colorize (progress.str ()) +
+               descColor.colorize (" " + message +
+                 std::string (width - progress.str ().length () - message.length () - 1, ' '));
   else
-    composed = composed.substr (0, width - 3) + "...";
+    composed = progressColor.colorize (progress.str ()) +
+               descColor.colorize (" " + message.substr (0, message.length () - 3) + "...");
 
-  Color color ("white on blue");
-  return color.colorize (composed) + "\n";
+  return composed + "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string menu ()
 {
-  Color text ("white on blue");
+  Color text ("color15 on gray6");
   return text.colorize (" (Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ");
 }
 
