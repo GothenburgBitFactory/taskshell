@@ -81,7 +81,7 @@ static void editTask (const std::string& uuid)
 
   command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_MODIFIED << "\n";
+  std::cout << STRING_REVIEW_MODIFIED << "\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ static void reviewTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_REVIEWED << "\n";
+  std::cout << STRING_REVIEW_REVIEWED << "\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -97,7 +97,7 @@ static void completeTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " done";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_COMPLETED << "\n";
+  std::cout << STRING_REVIEW_COMPLETED << "\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,24 @@ static void deleteTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " delete";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_DELETED << "\n";
+  std::cout << STRING_REVIEW_DELETED << "\n\n";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+static const std::string reviewNothing (
+  unsigned int width)
+{
+  return "\nThere are no tasks needing review.\n\n";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+static const std::string reviewStart (
+  unsigned int total,
+  unsigned int width)
+{
+  return "\none\n"
+         "two\n"
+         "three\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,6 +164,14 @@ static void reviewLoop (const std::vector <std::string>& uuids)
   auto total = uuids.size ();
   auto width = getWidth ();
 
+  if (total == 0)
+  {
+    std::cout << reviewNothing (width);
+    return;
+  }
+
+  std::cout << reviewStart (total, width);
+
   unsigned int current = 0;
   while (current < total)
   {
@@ -169,12 +194,12 @@ static void reviewLoop (const std::vector <std::string>& uuids)
     // Display prompt, get input.
     auto response = getResponse (menu ());
 
-         if (response == "e") { editTask (uuid);          ++current; }
-    else if (response == "r") { reviewTask (uuid);        ++current; }
-    else if (response == "c") { completeTask (uuid);      ++current; }
-    else if (response == "d") { deleteTask (uuid);        ++current; }
-    else if (response == "q") { break;                               }
-    else if (response == "")  { std::cout << "Skipped\n"; ++current; }
+         if (response == "e") { editTask (uuid);            ++current; }
+    else if (response == "r") { reviewTask (uuid);          ++current; }
+    else if (response == "c") { completeTask (uuid);        ++current; }
+    else if (response == "d") { deleteTask (uuid);          ++current; }
+    else if (response == "q") { break;                                 }
+    else if (response == "")  { std::cout << "Skipped\n\n"; ++current; }
     else
     {
       std::cout << format (STRING_REVIEW_UNRECOGNIZED, response) << "\n";
@@ -184,7 +209,9 @@ static void reviewLoop (const std::vector <std::string>& uuids)
     // nothing but advance to the next task.
   }
 
-  std::cout << format (STRING_REVIEW_END, tasks, total) << "\n";
+  std::cout << "\n"
+            << format (STRING_REVIEW_END, tasks, total)
+            << "\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
