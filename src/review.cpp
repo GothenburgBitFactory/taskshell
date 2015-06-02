@@ -146,11 +146,19 @@ static void reviewLoop (const std::vector <std::string>& uuids)
   unsigned int current = 0;
   while (current < total)
   {
-    // Display banner for this task.
-    std::cout << banner (current + 1, total, width, "");
-
     // Run 'info' report for task.
     auto uuid = uuids[current];
+
+    // Display banner for this task.
+    std::string dummy;
+    std::string description;
+    execute ("task",
+             {"_get", uuid + ".description"},
+             dummy,
+             description);
+
+    std::cout << banner (current + 1, total, width, trimRight (description, "\n"));
+
     std::string command = "task " + uuid + " information";
     system (command.c_str ());
 
