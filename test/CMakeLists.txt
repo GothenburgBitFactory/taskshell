@@ -37,6 +37,8 @@ foreach (src_FILE ${test_SRCS})
                               ../src/Color.cpp
                               ../src/FS.cpp
                               ../src/text.cpp
+                              ../src/utf8.cpp
+                              ../src/wcwidth6.cpp
                               test.cpp)
   target_link_libraries (${src_FILE} ${TASKSH_LIBRARIES})
 endforeach (src_FILE)
