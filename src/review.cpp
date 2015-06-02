@@ -123,10 +123,14 @@ static const std::string banner (
       << "] "
       << message;
 
-  out << std::string (width - out.str ().length () - 1, ' ');
+  std::string composed = out.str ();
+  if (composed.length () < width)
+    composed += std::string (width - composed.length () - 1, ' ');
+  else
+    composed = composed.substr (0, width - 3) + "...";
 
   Color color ("white on blue");
-  return color.colorize (out.str ()) + "\n";
+  return color.colorize (composed) + "\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
