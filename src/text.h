@@ -36,6 +36,7 @@ std::string trimRight (const std::string& in, const std::string& t = " ");
 std::string trim (const std::string& in, const std::string& t = " ");
 bool extractLine (std::string&, const std::string&, int, bool, unsigned int&);
 void split (std::vector<std::string>&, const std::string&, const char);
+void join (std::string&, const std::string&, const std::vector<std::string>&);
 std::string lowerCase (const std::string&);
 bool compare (const std::string&, const std::string&, bool sensitive = true);
 bool closeEnough (const std::string&, const std::string&, unsigned int minLength = 0);

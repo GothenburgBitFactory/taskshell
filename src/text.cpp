@@ -180,6 +180,24 @@ void split (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void join (
+  std::string& result,
+  const std::string& separator,
+  const std::vector<std::string>& items)
+{
+  std::stringstream s;
+  unsigned int size = items.size ();
+  for (unsigned int i = 0; i < size; ++i)
+  {
+    s << items[i];
+    if (i < size - 1)
+      s << separator;
+  }
+
+  result = s.str ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 std::string trimLeft (const std::string& in, const std::string& t /*= " "*/)
 {
   std::string out = in;
