@@ -30,9 +30,11 @@
 #include <string>
 #include <vector>
 
+void wrapText (std::vector <std::string>&, const std::string&, const int, bool);
 std::string trimLeft (const std::string& in, const std::string& t = " ");
 std::string trimRight (const std::string& in, const std::string& t = " ");
 std::string trim (const std::string& in, const std::string& t = " ");
+bool extractLine (std::string&, const std::string&, int, bool, unsigned int&);
 void split (std::vector<std::string>&, const std::string&, const char);
 std::string lowerCase (const std::string&);
 bool compare (const std::string&, const std::string&, bool sensitive = true);
