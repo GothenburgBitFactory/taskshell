@@ -46,8 +46,25 @@
 int cmdHelp (const std::vector <std::string>&);
 int cmdDiagnostics (const std::vector <std::string>&);
 int cmdReview (const std::vector <std::string>&);
+int cmdShell (const std::vector <std::string>&);
 std::string promptCompose ();
 std::string findTaskwarrior ();
+
+////////////////////////////////////////////////////////////////////////////////
+static void welcome ()
+{
+  std::cout << PACKAGE_STRING
+            << "\n"
+            << "\n"
+            << "  Commands:\n"
+            << "    tasksh> review           # Task review session\n"
+            << "    tasksh> list             # Any Taskwarrior command\n"
+            << "    tasksh> diagnostics      # Tasksh diagnostics\n"
+            << "    tasksh> help             # Tasksh help\n"
+            << "    tasksh> !ls -al          # Any shell command.  May also use 'exec'\n"
+            << "    tasksh> quit             # End of session. May also use 'exit'\n"
+            << "\n";
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 const std::string getResponse (const std::string& prompt)
@@ -103,6 +120,8 @@ static int commandLoop ()
     else if (closeEnough ("help",        args[0], 3)) status = cmdHelp        (args);
     else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics (args);
     else if (closeEnough ("review",      args[0], 3)) status = cmdReview      (args);
+    else if (closeEnough ("exec",        args[0], 3) ||
+             args[0][0] == '!')                       status = cmdShell       (args);
     else if (command != "")
     {
       command = "task " + command;
@@ -131,6 +150,7 @@ int main (int argc, const char** argv)
   {
     try
     {
+      welcome ();
       while ((status = commandLoop ()) == 0)
         ;
     }
