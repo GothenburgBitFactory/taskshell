@@ -44,12 +44,14 @@ int cmdDiagnostics (const std::vector <std::string>& args)
 {
   // TODO Version
   // TODO Platform
-  // TODO pthreads
   // TODO libreadline
+  // TODO TASKRC
+  // TODO TASKDATA
+  // TODO Task version
 
   // Taskwarrior version + location
   std::string path (getenv ("PATH"));
-  std::cout << "PATH " << path << "\n";
+  std::cout << "PATH        " << path << "\n";
 
   std::vector <std::string> paths;
   split (paths, path, ':');
