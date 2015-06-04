@@ -172,12 +172,13 @@ static const std::string banner (
 static const std::string menu ()
 {
   Color text ("color15 on gray6");
-  return text.colorize (" (Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ");
+  return text.colorize (" (Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 static void reviewLoop (const std::vector <std::string>& uuids)
 {
+  unsigned int reviewed = 0;
   auto total = uuids.size ();
   auto width = getWidth ();
 
@@ -211,12 +212,12 @@ static void reviewLoop (const std::vector <std::string>& uuids)
     // Display prompt, get input.
     auto response = getResponse (menu ());
 
-         if (response == "e") { editTask (uuid);            ++current; }
-    else if (response == "r") { reviewTask (uuid);          ++current; }
-    else if (response == "c") { completeTask (uuid);        ++current; }
-    else if (response == "d") { deleteTask (uuid);          ++current; }
-    else if (response == "q") { break;                                 }
-    else if (response == "")  { std::cout << "Skipped\n\n"; ++current; }
+         if (response == "e") { editTask (uuid);            ++current; ++reviewed; }
+    else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
+    else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
+    else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
+    else if (response == "q") { break;                                             }
+    else if (response == "")  { std::cout << "Skipped\n\n"; ++current;             }
     else
     {
       std::cout << format (STRING_REVIEW_UNRECOGNIZED, response) << "\n";
@@ -227,7 +228,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
   }
 
   std::cout << "\n"
-            << format (STRING_REVIEW_END, current, total)
+            << format (STRING_REVIEW_END, reviewed, total)
             << "\n\n";
 }
 
