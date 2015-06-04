@@ -7,6 +7,7 @@ set (tasksh_SRCS diag.cpp
                  help.cpp
                  prompt.cpp
                  review.cpp
+                 shell.cpp
                  Color.cpp Color.h
                  FS.cpp FS.h
                  text.cpp text.h
