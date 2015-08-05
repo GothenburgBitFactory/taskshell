@@ -255,7 +255,7 @@ int cmdReview (const std::vector <std::string>& args)
   status = execute ("task",
                     {"rc.report.review_temp.columns:uuid",
                      "rc.report.review_temp.sort:reviewed+",
-//                     "rc.report.review_temp.filter:reviewed.before:now-1week",
+                     "rc.report.review_temp.filter:reviewed.before:now-1week",
                      "rc.verbose:nothing",
                      "(", "+PENDING", "or", "+WAITING", ")",
                      "review_temp"},
