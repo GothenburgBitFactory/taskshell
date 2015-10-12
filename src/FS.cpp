@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
+#include <FS.h>
 #include <fstream>
 #include <glob.h>
 #include <sys/types.h>
@@ -40,7 +41,6 @@
 #include <text.h>
 #include <util.h>
 #include <i18n.h>
-#include <FS.h>
 
 #if defined SOLARIS || defined NETBSD || defined FREEBSD
 #include <limits.h>
@@ -246,7 +246,7 @@ std::string Path::expand (const std::string& in)
   if (tilde != std::string::npos)
   {
     const char *home = getenv("HOME");
-    if (home == NULL)
+    if (home == nullptr)
     {
       struct passwd* pw = getpwuid (getuid ());
       home = pw->pw_dir;
@@ -296,9 +296,9 @@ std::vector <std::string> Path::glob (const std::string& pattern)
 
   glob_t g;
 #ifdef SOLARIS
-  if (!::glob (pattern.c_str (), GLOB_ERR, NULL, &g))
+  if (!::glob (pattern.c_str (), GLOB_ERR, nullptr, &g))
 #else
-  if (!::glob (pattern.c_str (), GLOB_ERR | GLOB_BRACE | GLOB_TILDE, NULL, &g))
+  if (!::glob (pattern.c_str (), GLOB_ERR | GLOB_BRACE | GLOB_TILDE, nullptr, &g))
 #endif
     for (int i = 0; i < (int) g.gl_pathc; ++i)
       results.push_back (g.gl_pathv[i]);
@@ -310,7 +310,7 @@ std::vector <std::string> Path::glob (const std::string& pattern)
 ////////////////////////////////////////////////////////////////////////////////
 File::File ()
 : Path::Path ()
-, _fh (NULL)
+, _fh (nullptr)
 , _h (-1)
 , _locked (false)
 {
@@ -319,7 +319,7 @@ File::File ()
 ////////////////////////////////////////////////////////////////////////////////
 File::File (const Path& other)
 : Path::Path (other)
-, _fh (NULL)
+, _fh (nullptr)
 , _h (-1)
 , _locked (false)
 {
@@ -328,7 +328,7 @@ File::File (const Path& other)
 ////////////////////////////////////////////////////////////////////////////////
 File::File (const File& other)
 : Path::Path (other)
-, _fh (NULL)
+, _fh (nullptr)
 , _h (-1)
 , _locked (false)
 {
@@ -337,7 +337,7 @@ File::File (const File& other)
 ////////////////////////////////////////////////////////////////////////////////
 File::File (const std::string& in)
 : Path::Path (in)
-, _fh (NULL)
+, _fh (nullptr)
 , _h (-1)
 , _locked (false)
 {
@@ -421,7 +421,7 @@ void File::close ()
       unlock ();
 
     fclose (_fh);
-    _fh = NULL;
+    _fh = nullptr;
     _h = -1;
     _locked = false;
   }
@@ -848,10 +848,10 @@ bool Directory::remove () const
 bool Directory::remove_directory (const std::string& dir) const
 {
   DIR* dp = opendir (dir.c_str ());
-  if (dp != NULL)
+  if (dp != nullptr)
   {
     struct dirent* de;
-    while ((de = readdir (dp)) != NULL)
+    while ((de = readdir (dp)) != nullptr)
     {
       if (!strcmp (de->d_name, ".") ||
           !strcmp (de->d_name, ".."))
@@ -906,7 +906,7 @@ std::string Directory::cwd ()
 {
 #ifdef HAVE_GET_CURRENT_DIR_NAME
   char *buf = get_current_dir_name ();
-  if (buf == NULL)
+  if (buf == nullptr)
     throw std::bad_alloc ();
   std::string result (buf);
   free (buf);
@@ -952,10 +952,10 @@ void Directory::list (
   bool recursive)
 {
   DIR* dp = opendir (base.c_str ());
-  if (dp != NULL)
+  if (dp != nullptr)
   {
     struct dirent* de;
-    while ((de = readdir (dp)) != NULL)
+    while ((de = readdir (dp)) != nullptr)
     {
       if (!strcmp (de->d_name, ".") ||
           !strcmp (de->d_name, ".."))

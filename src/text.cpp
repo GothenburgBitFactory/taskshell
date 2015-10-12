@@ -25,13 +25,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
+#include <text.h>
 #include <algorithm>
 #include <sstream>
 #include <vector>
 #include <string>
 #include <strings.h>
 #include <utf8.h>
-#include <text.h>
 
 static void replace_positional (std::string&, const std::string&, const std::string&);
 
