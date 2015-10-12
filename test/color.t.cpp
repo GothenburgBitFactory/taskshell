@@ -32,7 +32,7 @@
 #include <test.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, char** argv)
+int main (int, char**)
 {
   UnitTest t (1036);
 
