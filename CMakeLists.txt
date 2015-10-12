@@ -1,8 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
 set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
-if(POLICY CMP0037)
-  cmake_policy(SET CMP0037 OLD)
-endif()
 
 include (CheckFunctionExists)
 include (CheckStructHasMember)
@@ -66,7 +63,7 @@ endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 set (CMAKE_CXX_FLAGS "${_CXX11_FLAGS} ${CMAKE_CXX_FLAGS}")
 
-set (CMAKE_CXX_FLAGS "-Wall -Wsign-compare -Wreturn-type ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS "-Wall -Wextra -Wsign-compare -Wreturn-type ${CMAKE_CXX_FLAGS}")
 
 if (NETBSD)
    # Since readline, etc likely to be in /usr/pkg/lib, not standard library
@@ -146,5 +143,5 @@ set (CPACK_SOURCE_PACKAGE_FILE_NAME ${PACKAGE_NAME}-${PACKAGE_VERSION})
 set (CPACK_SOURCE_IGNORE_FILES  "CMakeCache" "CMakeFiles" "CPackConfig" "CPackSourceConfig"
                                 "_CPack_Packages" "cmake_install" "install_manifest" "Makefile$"
                                 "test" "package-config" "misc/*" "src/tasksh$"
-                                "/\\.gitignore" "/\\.git/" "swp$")
+                                "/\\\\.gitignore" "/\\\\.git/" "swp$")
 include (CPack)
