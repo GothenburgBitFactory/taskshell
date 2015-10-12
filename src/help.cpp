@@ -31,7 +31,7 @@
 #include <text.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdHelp (const std::vector <std::string>& args)
+int cmdHelp ()
 {
   std::cout << "Run 'man tasksh' for help.\n";
   std::cout << "Run '! man tasksh' from inside tasksh.\n";

@@ -43,10 +43,10 @@
 //      a 'task' prefix could disambiguate.
 
 // tasksh commands.
-int cmdHelp (const std::vector <std::string>&);
-int cmdDiagnostics (const std::vector <std::string>&);
-int cmdReview (const std::vector <std::string>&);
-int cmdShell (const std::vector <std::string>&);
+int cmdHelp ();
+int cmdDiagnostics ();
+int cmdReview ();
+int cmdShell ();
 std::string promptCompose ();
 std::string findTaskwarrior ();
 
@@ -117,11 +117,11 @@ static int commandLoop ()
     // Dispatch command.
          if (closeEnough ("exit",        args[0], 3)) status = -1;
     else if (closeEnough ("quit",        args[0], 3)) status = -1;
-    else if (closeEnough ("help",        args[0], 3)) status = cmdHelp        (args);
-    else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics (args);
-    else if (closeEnough ("review",      args[0], 3)) status = cmdReview      (args);
+    else if (closeEnough ("help",        args[0], 3)) status = cmdHelp ();
+    else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics ();
+    else if (closeEnough ("review",      args[0], 3)) status = cmdReview ();
     else if (closeEnough ("exec",        args[0], 3) ||
-             args[0][0] == '!')                       status = cmdShell       (args);
+             args[0][0] == '!')                       status = cmdShell ();
     else if (command != "")
     {
       command = "task " + command;

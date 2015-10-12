@@ -109,15 +109,13 @@ static void deleteTask (const std::string& uuid)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static const std::string reviewNothing (
-  unsigned int width)
+static const std::string reviewNothing ()
 {
   return "\nThere are no tasks needing review.\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string reviewStart (
-  unsigned int total,
   unsigned int width)
 {
   std::string welcome =
@@ -184,11 +182,11 @@ static void reviewLoop (const std::vector <std::string>& uuids)
 
   if (total == 0)
   {
-    std::cout << reviewNothing (width);
+    std::cout << reviewNothing ();
     return;
   }
 
-  std::cout << reviewStart (total, width);
+  std::cout << reviewStart (width);
 
   unsigned int current = 0;
   while (current < total)
@@ -233,7 +231,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdReview (const std::vector <std::string>& args)
+int cmdReview ()
 {
   // Configure 'reviewed' UDA, but only if necessary.
   std::string input;

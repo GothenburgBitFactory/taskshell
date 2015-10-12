@@ -29,7 +29,7 @@
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdShell (const std::vector <std::string>& args)
+int cmdShell ()
 {
 /*
   auto status = execute ("task",

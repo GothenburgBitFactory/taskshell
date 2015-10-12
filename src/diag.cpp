@@ -40,7 +40,7 @@
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdDiagnostics (const std::vector <std::string>& args)
+int cmdDiagnostics ()
 {
   // TODO Version
   // TODO Platform
