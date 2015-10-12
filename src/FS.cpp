@@ -434,7 +434,9 @@ bool File::lock ()
   if (_fh && _h != -1)
   {
                     // l_type   l_whence  l_start  l_len  l_pid
-    struct flock fl = {F_WRLCK, SEEK_SET, 0,       0,     0 };
+    struct flock fl {};
+    fl.l_type = F_WRLCK;
+    fl.l_whence = SEEK_SET;
     fl.l_pid = getpid ();
     if (fcntl (_h, F_SETLKW, &fl) == 0)
       _locked = true;
@@ -449,7 +451,9 @@ void File::unlock ()
   if (_locked)
   {
                     // l_type   l_whence  l_start  l_len  l_pid
-    struct flock fl = {F_UNLCK, SEEK_SET, 0,       0,     0 };
+    struct flock fl {};
+    fl.l_type = F_UNLCK;
+    fl.l_whence = SEEK_SET;
     fl.l_pid = getpid ();
 
     fcntl (_h, F_SETLK, &fl);
