@@ -29,18 +29,16 @@
 
 #include <string>
 
-#define FEATURE_COLOR 1
-
 ////////////////////////////////////////////////////////////////////////////////
-#define _COLOR_INVERSE   0x00400000  // Inverse attribute.
-#define _COLOR_256       0x00200000  // 256-color mode.
-#define _COLOR_HASBG     0x00100000  // Has background color (all values taken).
-#define _COLOR_HASFG     0x00080000  // Has foreground color (all values taken).
-#define _COLOR_UNDERLINE 0x00040000  // General underline attribute.
-#define _COLOR_BOLD      0x00020000  // 16-color bold attribute.
-#define _COLOR_BRIGHT    0x00010000  // 16-color bright background attribute.
-#define _COLOR_BG        0x0000FF00  // 8-bit background color index.
-#define _COLOR_FG        0x000000FF  // 8-bit foreground color index.
+#define COLOR_INVERSE   0x00400000  // Inverse attribute.
+#define COLOR_256       0x00200000  // 256-color mode.
+#define COLOR_HASBG     0x00100000  // Has background color (all values taken).
+#define COLOR_HASFG     0x00080000  // Has foreground color (all values taken).
+#define COLOR_UNDERLINE 0x00040000  // General underline attribute.
+#define COLOR_BOLD      0x00020000  // 16-color bold attribute.
+#define COLOR_BRIGHT    0x00010000  // 16-color bright background attribute.
+#define COLOR_BG        0x0000FF00  // 8-bit background color index.
+#define COLOR_FG        0x000000FF  // 8-bit foreground color index.
 
 class Color
 {
