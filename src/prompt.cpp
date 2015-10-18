@@ -107,7 +107,7 @@ std::string promptCompose ()
   if (decoration.length ())
     return "task " + composeContexts (true) + "> ";
 
-  return "task> ";
+  return "tasksh> ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
