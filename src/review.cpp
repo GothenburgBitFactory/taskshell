@@ -246,6 +246,8 @@ int cmdReview (const std::vector <std::string>& args)
   status = execute ("task", {"_get", "rc.report._reviewed.columns"}, input, output);
   if (status || output != "uuid\n")
   {
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.description",
+                      "Tasksh review report.  Adjust the filter to your needs."                                              }, input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"               }, input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+,modified+"}, input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
