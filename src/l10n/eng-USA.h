@@ -120,5 +120,10 @@
 #define STRING_REVIEW_UNRECOGNIZED   "Command '{1}' is not recognized."
 #define STRING_REVIEW_END            "End of review. {1} out of {2} tasks reviewed."
 
+#define STRING_REVIEW_INTRO_1        "The review process is important for keeping your list accurate, so you are working on the right thing."
+#define STRING_REVIEW_INTRO_2        "For each task you are shown, look at the metadata. Determine whether the task needs to be changed (enter 'e' to edit), or whether it is accurate (enter 'r' to mark as reviewed). You may skip a task ('enter') but a skipped task is not considered reviewed."
+#define STRING_REVIEW_INTRO_3        "You may stop at any time, and resume later, right where you left off. See 'man tasksh' for more details."
+#define STRING_REVIEW_PROMPT         "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit"
+
 #endif
 

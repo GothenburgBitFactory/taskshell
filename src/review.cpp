@@ -55,7 +55,7 @@ static unsigned int getWidth ()
 {
   // Determine window size.
 //  int width = config.getInteger ("defaultwidth");
-  int width = 0;
+  static auto width = 0;
 
   if (width == 0)
   {
@@ -118,17 +118,9 @@ static const std::string reviewNothing ()
 static const std::string reviewStart (
   unsigned int width)
 {
-  std::string welcome =
-    "The review process is important for keeping your list accurate, so you are "
-    "working on the right thing.\n\n"
-
-    "For each task you are shown, look at the metadata. Determine whether the "
-    "task needs to be changed (enter 'e' to edit), or whether it is accurate "
-    "(enter 'r' to mark as reviewed). You may skip a task ('enter') but a "
-    "skipped task is not considered reviewed.\n\n"
-
-    "You may stop at any time, and resume later, right where you left off. "
-    "See 'man tasksh' for more details.";
+  std::string welcome = STRING_REVIEW_INTRO_1 "\n\n"
+                        STRING_REVIEW_INTRO_2 "\n\n"
+                        STRING_REVIEW_INTRO_3;
 
   std::vector <std::string> lines;
   wrapText (lines, welcome, width, false);
@@ -170,7 +162,7 @@ static const std::string banner (
 static const std::string menu ()
 {
   Color text ("color15 on gray6");
-  return text.colorize (" (Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit ") + " ";
+  return text.colorize (" " STRING_REVIEW_PROMPT " ");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
