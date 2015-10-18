@@ -134,5 +134,8 @@
     tasksh> !ls -al          Any shell command.  May also use 'exec'\n\
     tasksh> quit             End of session. May also use 'exit'\n"
 
+// Help
+#define STRING_COMMAND_HELP          "Run 'man tasksh' from your shell prompt.\nRun '! man tasksh' from inside tasksh.\n"
+
 #endif
 

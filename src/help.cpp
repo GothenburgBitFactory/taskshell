@@ -33,8 +33,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int cmdHelp ()
 {
-  std::cout << "Run 'man tasksh' for help.\n";
-  std::cout << "Run '! man tasksh' from inside tasksh.\n";
+  std::cout << "\n" << STRING_COMMAND_HELP << "\n";
   return 0;
 }
 
