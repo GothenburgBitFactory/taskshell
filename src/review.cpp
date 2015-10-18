@@ -196,6 +196,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
 
     std::cout << banner (current + 1, total, width, trimRight (description, "\n"));
 
+    // Use 'system' to run the command and show the output.
     std::string command = "task " + uuid + " information";
     system (command.c_str ());
 
@@ -235,6 +236,7 @@ int cmdReview ()
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.label", "Reviewed"}, input, output);
   }
 
+  // Configure '_reviewed' report, but only if necessary.
   status = execute ("task", {"_get", "rc.report._reviewed.columns"}, input, output);
   if (status || output != "uuid\n")
   {
@@ -255,7 +257,7 @@ int cmdReview ()
                     },
                     input, output);
 
-  // Iterate over each task in the list.
+  // Review the set of UUIDs.
   std::vector <std::string> uuids;
   split (uuids, trimRight (output, "\n"), '\n');
   reviewLoop (uuids);
