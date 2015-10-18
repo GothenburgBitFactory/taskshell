@@ -26,8 +26,6 @@ endif (CYGWIN)
 
 endif (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
-configure_file (run_all.in run_all)
-
 add_custom_target (test ./run_all --verbose
                         DEPENDS ${test_SRCS} tasksh_executable
                         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test)
