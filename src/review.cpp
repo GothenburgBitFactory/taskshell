@@ -228,32 +228,36 @@ int cmdReview ()
   // Configure 'reviewed' UDA, but only if necessary.
   std::string input;
   std::string output;
-  auto status = execute ("task",
-                         {"_get", "rc.uda.reviewed.type"},
-                         input,
-                         output);
+  auto status = execute ("task", {"_get", "rc.uda.reviewed.type"}, input, output);
   if (status || output != "date\n")
   {
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.type",  "date"},     input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.label", "Reviewed"}, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "review.period",      "1week"},    input, output);
+  }
+
+  status = execute ("task", {"_get", "rc.report._reviewed.columns"}, input, output);
+  if (status || output != "uuid\n")
+  {
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"     }, input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+"}, input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
+                      "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"               }, input, output);
   }
 
   // Obtain a list of UUIDs to review.
-  // TODO Incorporate filter 'rc.report.review_temp.filter:reviewed.before:now-1week'.
-  // TODO Incorporate user supplied filter 'review <filter>'.
   status = execute ("task",
-                    {"rc.report.review_temp.columns:uuid",
-                     "rc.report.review_temp.sort:reviewed+",
-                     "rc.report.review_temp.filter:reviewed.before:now-1week",
-                     "rc.verbose:nothing",
-                     "(", "+PENDING", "or", "+WAITING", ")",
-                     "review_temp"},
+                    {
+                      "rc.color=off",
+                      "rc.detection=off",
+                      "rc._forcecolor=off",
+                      "rc.verbose=nothing",
+                      "_reviewed"
+                    },
                     input, output);
 
   // Iterate over each task in the list.
   std::vector <std::string> uuids;
-  split (uuids, output, '\n');
+  split (uuids, trimRight (output, "\n"), '\n');
   reviewLoop (uuids);
   return 0;
 }
