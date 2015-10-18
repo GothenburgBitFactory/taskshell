@@ -125,5 +125,14 @@
 #define STRING_REVIEW_INTRO_3        "You may stop at any time, and resume later, right where you left off. See 'man tasksh' for more details."
 #define STRING_REVIEW_PROMPT         "(Enter) Skip, (e)dit, (c)ompleted, (d)eleted, Mark as (r)eviewed, (q)uit"
 
+// Initial prompt
+#define STRING_COMMAND_USAGE         "  Commands:\n\
+    tasksh> review           Task review session\n\
+    tasksh> list             Any Taskwarrior command\n\
+    tasksh> diagnostics      Tasksh diagnostics\n\
+    tasksh> help             Tasksh help\n\
+    tasksh> !ls -al          Any shell command.  May also use 'exec'\n\
+    tasksh> quit             End of session. May also use 'exit'\n"
+
 #endif
 

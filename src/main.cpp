@@ -56,13 +56,7 @@ static void welcome ()
   std::cout << PACKAGE_STRING
             << "\n"
             << "\n"
-            << "  Commands:\n"
-            << "    tasksh> review           # Task review session\n"
-            << "    tasksh> list             # Any Taskwarrior command\n"
-            << "    tasksh> diagnostics      # Tasksh diagnostics\n"
-            << "    tasksh> help             # Tasksh help\n"
-            << "    tasksh> !ls -al          # Any shell command.  May also use 'exec'\n"
-            << "    tasksh> quit             # End of session. May also use 'exit'\n"
+            << STRING_COMMAND_USAGE
             << "\n";
 }
 
