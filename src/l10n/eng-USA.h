@@ -137,5 +137,17 @@
 // Help
 #define STRING_COMMAND_HELP          "Run 'man tasksh' from your shell prompt.\nRun '! man tasksh' from inside tasksh.\n"
 
+// Diagnostics
+#define STRING_CMD_DIAG_PLATFORM     "Platform"
+#define STRING_CMD_DIAG_UNKNOWN      "Unknown"
+#define STRING_CMD_DIAG_COMPILER     "Compiler"
+#define STRING_CMD_DIAG_VERSION      "Version"
+#define STRING_CMD_DIAG_CAPS         "Caps"
+#define STRING_CMD_DIAG_COMPLIANCE   "Compliance"
+#define STRING_CMD_DIAG_FEATURES     "Build Features"
+#define STRING_CMD_DIAG_BUILT        "Built"
+#define STRING_CMD_DIAG_COMMIT       "Commit"
+#define STRING_CMD_DIAG_CONFIG       "Configuration"
+
 #endif
 
