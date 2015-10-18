@@ -238,10 +238,10 @@ int cmdReview ()
   status = execute ("task", {"_get", "rc.report._reviewed.columns"}, input, output);
   if (status || output != "uuid\n")
   {
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"     }, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+"}, input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"               }, input, output);
+    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+,modified+"}, input, output);
     execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
-                      "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"               }, input, output);
+                      "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"                         }, input, output);
   }
 
   // Obtain a list of UUIDs to review.
