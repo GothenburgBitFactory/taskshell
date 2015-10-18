@@ -4,11 +4,9 @@
 tasksh \- Interactive taskwarrior shell
 
 .SH SYNOPSIS
-.B tasksh [<commands-file>]
+.B tasksh
 .br
 .B tasksh --version
-.br
-.B tasksh --help
 
 .SH DESCRIPTION
 The tasksh program can be used to create a more immersive taskwarrior
@@ -24,16 +22,22 @@ Tasksh supports the following commands.  All other commands are passed intact to
 Taskwarrior.
 
 .TP
-.B exit/quit/Ctrl-D
-These commands cause tasksh to terminate.
+.B diagnostics
+Displays settings pertinent to tasksh, for diagnosing problems.
 
 .TP
-.B diagnostics
-Displays settings pertinent to tasksh.
+.B exit/quit
+These commands cause tasksh to terminate, returning you to your system shell.
+
+.TP
+.B help
+Shows how to obtain help.
 
 .TP
 .B review
-Begins an interactive review session.
+Begins an interactive review session. Note: requires Taskwarrior 2.5.0 or later.
+For full details, see: 
+<https://taskwarrior.org/docs/review.html>
 
 .SH USAGE
 Here is an example tasksh session.
@@ -78,11 +82,11 @@ ID Project Pri Due        Active Age   Description
 .br
 ---------------------------------------------------------------------
 .br
- 2 party   H   10/17/2010        2 hrs Select and book a venue
+ 2 party   H   10/17/2015        2 hrs Select and book a venue
 .br
- 5 party   H   10/22/2010        2 hrs Design invitations
+ 5 party   H   10/22/2015        2 hrs Design invitations
 .br
- 9 home        10/31/2010         1 hr Pay rent
+ 9 home        10/31/2015         1 hr Pay rent
 .br
  3 party                         2 hrs Mail invitations
 .br
