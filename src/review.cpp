@@ -224,7 +224,7 @@ static void reviewLoop (const std::vector <std::string>& uuids)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdReview ()
+int cmdReview (const std::vector <std::string>& args)
 {
   // Configure 'reviewed' UDA, but only if necessary.
   std::string input;

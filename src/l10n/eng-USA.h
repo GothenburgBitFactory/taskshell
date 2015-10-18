@@ -131,7 +131,7 @@
     tasksh> list             Or any other Taskwarrior command\n\
     tasksh> diagnostics      Tasksh diagnostics\n\
     tasksh> help             Tasksh help\n\
-    tasksh> !ls -al          Any shell command.  May also use 'exec'\n\
+    tasksh> exec ls -al      Any shell command.  May also use '!ls -al'\n\
     tasksh> quit             End of session. May also use 'exit'\n"
 
 // Help

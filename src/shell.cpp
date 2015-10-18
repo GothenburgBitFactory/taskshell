@@ -27,16 +27,20 @@
 #include <cmake.h>
 #include <vector>
 #include <string>
+#include <stdlib.h>
+#include <text.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdShell ()
+int cmdShell (const std::vector <std::string>& args)
 {
-/*
-  auto status = execute ("task",
-                         {"_get", "rc.uda.reviewed.type"},
-                         input,
-                         output);
-*/
+  std::string combined;
+  join (combined, " ", args);
+
+  // Support '!ls' as well as '! ls'.
+  if (combined[0] == '!')
+    combined = combined.substr (1);
+
+  system (combined.c_str ());
   return 0;
 }
 
