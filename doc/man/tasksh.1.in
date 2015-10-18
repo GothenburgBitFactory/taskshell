@@ -34,8 +34,18 @@ These commands cause tasksh to terminate, returning you to your system shell.
 Shows how to obtain help.
 
 .TP
-.B review
-Begins an interactive review session. Note: requires Taskwarrior 2.5.0 or later.
+.B review [N]
+Begins an interactive review session, where you can mark tasks as reviewed,
+modify them using your text editor, or skip them. You can terminate a review
+session at any time.
+Finds your pending and waiting tasks that need to be reviewed. By default this
+means any task with a missing 'reviewed' date, or with a 'reviewed' date that
+is older than a week. This means if you run the 'review' command to completion,
+a subsequent 'review' command will find no tasks to review, until a week has
+elapsed.
+If 'N' is provided, the session is limited to reviewing only N tasks.
+
+Note: requires Taskwarrior 2.5.0 or later.
 For full details, see: 
 <https://taskwarrior.org/docs/review.html>
 

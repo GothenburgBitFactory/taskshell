@@ -2,6 +2,8 @@
 
 - Implemented 'review' command.
 - Implemented 'diag' command.
+- Added 'review N' option, to specify the number of tasks you would like to
+  review.
 
 ------ current release ---------------------------
 
