@@ -6,6 +6,7 @@ New Features in tasksh 1.1.0
 New commands in tasksh 1.1.0
 
   - 'review' begins an interactive review session
+  - 'diag' shows diagnostic info for problem solving
 
 New configuration options in tasksh 1.1.0
 
