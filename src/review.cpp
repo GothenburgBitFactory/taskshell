@@ -166,9 +166,9 @@ static const std::string menu ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void reviewLoop (const std::vector <std::string>& uuids)
+static void reviewLoop (const std::vector <std::string>& uuids, int limit)
 {
-  unsigned int reviewed = 0;
+  auto reviewed = 0;
   auto total = uuids.size ();
   auto width = getWidth ();
 
@@ -181,7 +181,8 @@ static void reviewLoop (const std::vector <std::string>& uuids)
   std::cout << reviewStart (width);
 
   unsigned int current = 0;
-  while (current < total)
+  while (current < total &&
+         (limit == 0 || reviewed < limit))
   {
     // Run 'info' report for task.
     auto uuid = uuids[current];
@@ -226,6 +227,11 @@ static void reviewLoop (const std::vector <std::string>& uuids)
 ////////////////////////////////////////////////////////////////////////////////
 int cmdReview (const std::vector <std::string>& args)
 {
+  // Is there a specified limit?
+  auto limit = 0;
+  if (args.size () == 2)
+    limit = strtol (args[1].c_str (), NULL, 10);
+
   // Configure 'reviewed' UDA, but only if necessary.
   std::string input;
   std::string output;
@@ -260,7 +266,7 @@ int cmdReview (const std::vector <std::string>& args)
   // Review the set of UUIDs.
   std::vector <std::string> uuids;
   split (uuids, trimRight (output, "\n"), '\n');
-  reviewLoop (uuids);
+  reviewLoop (uuids, limit);
   return 0;
 }
 

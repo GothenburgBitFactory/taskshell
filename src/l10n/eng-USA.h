@@ -127,7 +127,7 @@
 
 // Initial prompt
 #define STRING_COMMAND_USAGE         "  Commands:\n\
-    tasksh> review           Task review session\n\
+    tasksh> review [N]       Task review session, with optional cutoff after N tasks\n\
     tasksh> list             Or any other Taskwarrior command\n\
     tasksh> diagnostics      Tasksh diagnostics\n\
     tasksh> help             Tasksh help\n\
