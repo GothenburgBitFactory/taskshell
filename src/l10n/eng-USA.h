@@ -128,7 +128,7 @@
 // Initial prompt
 #define STRING_COMMAND_USAGE         "  Commands:\n\
     tasksh> review           Task review session\n\
-    tasksh> list             Any Taskwarrior command\n\
+    tasksh> list             Or any other Taskwarrior command\n\
     tasksh> diagnostics      Tasksh diagnostics\n\
     tasksh> help             Tasksh help\n\
     tasksh> !ls -al          Any shell command.  May also use 'exec'\n\
