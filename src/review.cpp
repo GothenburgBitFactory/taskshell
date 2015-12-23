@@ -205,11 +205,13 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
     auto response = getResponse (menu ());
 
          if (response == "e") { editTask (uuid);            ++current; ++reviewed; }
-    else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
+    else if (response == "s") { std::cout << "Skipped\n\n"; ++current;             }
     else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
     else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
+    else if (response == "")  { reviewTask (uuid);          ++current; ++reviewed; }
+    else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
     else if (response == "q") { break;                                             }
-    else if (response == "")  { std::cout << "Skipped\n\n"; ++current;             }
+
     else
     {
       std::cout << format (STRING_REVIEW_UNRECOGNIZED, response) << "\n";
