@@ -121,7 +121,7 @@ TASKDATA and TASKRC environment variables. See 'man taskrc' for more
 details.
 
 .SH "CREDITS & COPYRIGHTS"
-Copyright (C) 2006 \- 2015 P. Beckingham, F. Hernandez.
+Copyright (C) 2006 \- 2016 P. Beckingham, F. Hernandez.
 
 This man page was originally written by Federico Hernandez.
 
