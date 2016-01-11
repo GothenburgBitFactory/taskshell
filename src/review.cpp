@@ -204,7 +204,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
     // Display prompt, get input.
     auto response = getResponse (menu ());
 
-         if (response == "e") { editTask (uuid);            ++current; ++reviewed; }
+         if (response == "e") { editTask (uuid);                                   }
     else if (response == "s") { std::cout << "Skipped\n\n"; ++current;             }
     else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
     else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
