@@ -37,9 +37,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <string.h>
-#include <errno.h>
 #include <text.h>
-#include <util.h>
 #include <i18n.h>
 
 #if defined SOLARIS || defined NETBSD || defined FREEBSD
@@ -54,13 +52,6 @@
 #ifndef GLOB_BRACE
 #define GLOB_BRACE 0
 #endif
-
-////////////////////////////////////////////////////////////////////////////////
-std::ostream& operator<< (std::ostream& out, const Path& path)
-{
-  out << path._data;
-  return out;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 Path::Path ()
@@ -82,11 +73,6 @@ Path::Path (const std::string& in)
 {
   _original = in;
   _data = expand (in);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-Path::~Path ()
-{
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -407,12 +393,6 @@ bool File::open ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool File::openAndLock ()
-{
-  return open () && lock ();
-}
-
-////////////////////////////////////////////////////////////////////////////////
 void File::close ()
 {
   if (_fh)
@@ -434,9 +414,7 @@ bool File::lock ()
   if (_fh && _h != -1)
   {
                     // l_type   l_whence  l_start  l_len  l_pid
-    struct flock fl {};
-    fl.l_type = F_WRLCK;
-    fl.l_whence = SEEK_SET;
+    struct flock fl = {F_WRLCK, SEEK_SET, 0,       0,     0 };
     fl.l_pid = getpid ();
     if (fcntl (_h, F_SETLKW, &fl) == 0)
       _locked = true;
@@ -451,9 +429,7 @@ void File::unlock ()
   if (_locked)
   {
                     // l_type   l_whence  l_start  l_len  l_pid
-    struct flock fl {};
-    fl.l_type = F_UNLCK;
-    fl.l_whence = SEEK_SET;
+    struct flock fl = {F_UNLCK, SEEK_SET, 0,       0,     0 };
     fl.l_pid = getpid ();
 
     fcntl (_h, F_SETLK, &fl);
@@ -500,31 +476,6 @@ void File::read (std::vector <std::string>& contents)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Opens if necessary.
-void File::write (const std::string& line)
-{
-  if (!_fh)
-    open ();
-
-  if (_fh)
-    fputs (line.c_str (), _fh);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Opens if necessary.
-void File::write (const std::vector <std::string>& lines)
-{
-  if (!_fh)
-    open ();
-
-  if (_fh)
-  {
-    for (auto& line : lines)
-      fputs (line.c_str (), _fh);
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Opens if necessary.
 void File::append (const std::string& line)
 {
   if (!_fh)
@@ -548,7 +499,19 @@ void File::append (const std::vector <std::string>& lines)
   {
     fseek (_fh, 0, SEEK_END);
     for (auto& line : lines)
-      fputs ((line + "\n").c_str (), _fh);
+      fputs (line.c_str (), _fh);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void File::write_raw (const std::string& line)
+{
+  if (!_fh)
+    open ();
+
+  if (_fh)
+  {
+    fputs (line.c_str (), _fh);
   }
 }
 
@@ -559,7 +522,7 @@ void File::truncate ()
     open ();
 
   if (_fh)
-    ftruncate (_h, 0);
+    (void) ftruncate (_h, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -647,25 +610,6 @@ bool File::create (const std::string& name, int mode /* = 0640 */)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string File::read (const std::string& name)
-{
-  std::string contents = "";
-
-  std::ifstream in (name.c_str ());
-  if (in.good ())
-  {
-    std::string line;
-    line.reserve (1024);
-    while (getline (in, line))
-      contents += line + "\n";
-
-    in.close ();
-  }
-
-  return contents;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 bool File::read (const std::string& name, std::string& contents)
 {
   contents = "";
@@ -746,46 +690,6 @@ bool File::write (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool File::append (const std::string& name, const std::string& contents)
-{
-  std::ofstream out (expand (name).c_str (),
-                     std::ios_base::out | std::ios_base::app);
-  if (out.good ())
-  {
-    out << contents;
-    out.close ();
-    return true;
-  }
-
-  return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-bool File::append (
-  const std::string& name,
-  const std::vector <std::string>& lines,
-  bool addNewlines /* = true */)
-{
-  std::ofstream out (expand (name).c_str (),
-                     std::ios_base::out | std::ios_base::app);
-  if (out.good ())
-  {
-    for (auto& line : lines)
-    {
-      out << line;
-
-      if (addNewlines)
-        out << "\n";
-    }
-
-    out.close ();
-    return true;
-  }
-
-  return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 bool File::remove (const std::string& name)
 {
   return unlink (expand (name).c_str ()) == 0 ? true : false;
@@ -817,11 +721,6 @@ Directory::Directory (const Path& other)
 ////////////////////////////////////////////////////////////////////////////////
 Directory::Directory (const std::string& in)
 : File::File (in)
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////
-Directory::~Directory ()
 {
 }
 
