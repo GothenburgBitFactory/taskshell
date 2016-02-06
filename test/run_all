@@ -175,6 +175,8 @@ class TestRunner(object):
 
     def show_report(self):
         self.tap.flush()
+        sys.stdout.flush()
+        sys.stderr.flush()
 
         log.debug("Calling 'problems --summary' for report")
         return call([os.path.abspath("problems"), "--summary", cmd_args.tapfile])
@@ -198,11 +200,8 @@ def main():
     runner = TestRunner()
     runner.start()
 
-    # If we're producing summary report, propagate the return code
-    if not cmd_args.verbose:
-        return runner.show_report()
-    else:
-        return 0
+    # Propagate the return code
+    return runner.show_report()
 
 
 if __name__ == "__main__":
