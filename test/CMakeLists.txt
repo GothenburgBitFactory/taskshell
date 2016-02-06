@@ -44,3 +44,6 @@ foreach (src_FILE ${test_SRCS})
   target_link_libraries (${src_FILE} ${TASKSH_LIBRARIES})
 endforeach (src_FILE)
 
+configure_file(run_all run_all COPYONLY)
+configure_file(problems problems COPYONLY)
+
