@@ -1,6 +1,11 @@
 1.1.0 () -
 
-- TS-24 add review option (m)odify (thanks to David Patrick).
+- TD-120  Missing cmakedefine for HAVE_GET_CURRENT_DIR_NAME
+          (Thanks to Jörg Krause, Ben Boeckel).
+- TW-1845 Cygwin build fails, missing get_current_dir_name
+          (thanks to hosaka).
+- TS-24   add review option (m)odify
+          (thanks to David Patrick).
 - Implemented 'review' command.
 - Implemented 'diag' command.
 - Added 'review N' option, to specify the number of tasks you would like to
@@ -10,11 +15,14 @@
 
 1.0.0 (2014-12-21) 5934dfcefac6d037a359bc733a8382e42e32552e
 
-- TS-1 Apostrophe inside tasksh 'log' causes segmentation fault (thanks to
-       David Stahl).
-- TS-2 tasksh segfaults if quotes not closed (thanks to Fidel Mato).
-- TS-5 tasksh segfaults (thanks to David Patrick).
-- TS-13 Quotes included when using task shell (thanks to Kevin Gunn).
+- TS-1    Apostrophe inside tasksh 'log' causes segmentation fault
+          (thanks to David Stahl).
+- TS-2    tasksh segfaults if quotes not closed
+          (thanks to Fidel Mato).
+- TS-5    tasksh segfaults
+          (thanks to David Patrick).
+- TS-13   Quotes included when using task shell
+          (thanks to Kevin Gunn).
 - libreadline support added for line editing and command history.
 
 ------ start -----------------------------------
