@@ -12,4 +12,6 @@ _CPack_Packages
 CPackConfig.cmake
 CPackSourceConfig.cmake
 patches
+liblibshared.a
+libtasksh.a
 *.exe

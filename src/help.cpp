@@ -28,7 +28,7 @@
 #include <iostream>
 #include <cstring>
 #include <i18n.h>
-#include <text.h>
+#include <shared.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 int cmdHelp ()

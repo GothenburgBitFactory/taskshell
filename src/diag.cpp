@@ -34,7 +34,8 @@
 #include <FS.h>
 #include <Color.h>
 #include <i18n.h>
-#include <text.h>
+#include <shared.h>
+#include <format.h>
 #include <util.h>
 
 #ifdef HAVE_READLINE
@@ -177,8 +178,7 @@ TRING_CMD_DIAG_COMPILER
   std::string path (getenv ("PATH"));
   std::cout << "       PATH: " << path << "\n";
 
-  std::vector <std::string> paths;
-  split (paths, path, ':');
+  std::vector <std::string> paths = split (path, ':');
 
   std::vector <std::string>::iterator i;
   for (i = paths.begin (); i != paths.end (); ++i)

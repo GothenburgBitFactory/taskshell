@@ -10,6 +10,7 @@
 - Implemented 'diag' command.
 - Added 'review N' option, to specify the number of tasks you would like to
   review.
+- Integrated libshared.git.
 
 ------ current release ---------------------------
 

@@ -44,7 +44,9 @@
 #endif
 
 #include <Color.h>
-#include <text.h>
+#include <Lexer.h>
+#include <shared.h>
+#include <format.h>
 #include <util.h>
 #include <i18n.h>
 
@@ -124,7 +126,7 @@ static const std::string reviewStart (
 
   std::vector <std::string> lines;
   wrapText (lines, welcome, width, false);
-  join (welcome, "\n", lines);
+  welcome = join ("\n", lines);
 
   return "\n" + welcome + "\n\n";
 }
@@ -195,7 +197,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
              dummy,
              description);
 
-    std::cout << banner (current + 1, total, width, trimRight (description, "\n"));
+    std::cout << banner (current + 1, total, width, Lexer::trimRight (description, "\n"));
 
     // Use 'system' to run the command and show the output.
     std::string command = "task " + uuid + " information";
@@ -268,8 +270,7 @@ int cmdReview (const std::vector <std::string>& args)
                     input, output);
 
   // Review the set of UUIDs.
-  std::vector <std::string> uuids;
-  split (uuids, trimRight (output, "\n"), '\n');
+  std::vector <std::string> uuids = split (Lexer::trimRight (output, "\n"), '\n');
   reviewLoop (uuids, limit);
   return 0;
 }

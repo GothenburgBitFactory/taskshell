@@ -31,7 +31,7 @@
 #include <cstring>
 #include <stdlib.h>
 #include <i18n.h>
-#include <text.h>
+#include <shared.h>
 
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
@@ -105,8 +105,7 @@ static int commandLoop ()
   int status = 0;
   if (command != "")
   {
-    std::vector <std::string> args;
-    split (args, command, ' ');
+    std::vector <std::string> args = split (command, ' ');
 
     // Dispatch command.
          if (closeEnough ("exit",        args[0], 3)) status = -1;

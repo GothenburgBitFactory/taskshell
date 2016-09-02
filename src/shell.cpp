@@ -28,13 +28,12 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
-#include <text.h>
+#include <shared.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 int cmdShell (const std::vector <std::string>& args)
 {
-  std::string combined;
-  join (combined, " ", args);
+  auto combined = join (" ", args);
 
   // Support '!ls' as well as '! ls'.
   if (combined[0] == '!')
