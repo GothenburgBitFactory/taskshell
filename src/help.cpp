@@ -26,14 +26,13 @@
 
 #include <cmake.h>
 #include <iostream>
-#include <cstring>
-#include <i18n.h>
-#include <shared.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 int cmdHelp ()
 {
-  std::cout << "\n" << STRING_COMMAND_HELP << "\n";
+  std::cout << "\n"
+            << "Run 'man tasksh' from your shell prompt.\nRun '! man tasksh' from inside tasksh.\n"
+            << "\n";
   return 0;
 }
 
