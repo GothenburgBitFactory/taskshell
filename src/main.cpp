@@ -30,7 +30,6 @@
 #include <string>
 #include <cstring>
 #include <stdlib.h>
-#include <i18n.h>
 #include <shared.h>
 
 #ifdef HAVE_READLINE
@@ -56,7 +55,13 @@ static void welcome ()
   std::cout << PACKAGE_STRING
             << "\n"
             << "\n"
-            << STRING_COMMAND_USAGE
+            << "  Commands:\n"
+            << "    tasksh> review [N]       Task review session, with optional cutoff after N tasks\n"
+            << "    tasksh> list             Or any other Taskwarrior command\n"
+            << "    tasksh> diagnostics      Tasksh diagnostics\n"
+            << "    tasksh> help             Tasksh help\n"
+            << "    tasksh> exec ls -al      Any shell command.  May also use '!ls -al'\n"
+            << "    tasksh> quit             End of session. May also use 'exit'\n"
             << "\n";
 }
 
