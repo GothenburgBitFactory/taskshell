@@ -52,15 +52,6 @@ if (READLINE_FOUND)
   set (TASKSH_LIBRARIES    ${TASKSH_LIBRARIES}    ${READLINE_LIBRARIES})
 endif (READLINE_FOUND)
 
-# Set the package language.
-if (LANGUAGE)
-  set (PACKAGE_LANGUAGE ${LANGUAGE})
-else (LANGUAGE)
-  set (PACKAGE_LANGUAGE 1)
-endif (LANGUAGE)
-
-set (LANGUAGE_ENG_USA 1)
-
 message ("-- Configuring cmake.h")
 configure_file (
   ${CMAKE_SOURCE_DIR}/cmake.h.in
