@@ -33,7 +33,6 @@
 #include <stdlib.h>
 #include <FS.h>
 #include <Color.h>
-#include <i18n.h>
 #include <shared.h>
 #include <format.h>
 #include <util.h>
@@ -52,7 +51,7 @@ int cmdDiagnostics ()
             << bold.colorize (PACKAGE_STRING)
             << "\n";
 
-  std::cout << "   " << STRING_CMD_DIAG_PLATFORM << ": "
+  std::cout << "   " << "Platform: "
             <<
 #if defined (DARWIN)
                "Darwin"
@@ -75,18 +74,18 @@ TRING_CMD_DIAG_COMPILER
 #elif defined (GNUHURD)
                "GNU/Hurd"
 #else
-               STRING_CMD_DIAG_UNKNOWN
+               "Unknown"
 #endif
             << "\n\n";
 
   // Compiler.
-  std::cout << bold.colorize (STRING_CMD_DIAG_COMPILER)
+  std::cout << bold.colorize ("Compiler")
             << "\n"
 #ifdef __VERSION__
-            << "    " << STRING_CMD_DIAG_VERSION << ": "
+            << "    " << "Version: "
             << __VERSION__ << "\n"
 #endif
-            << "       " << STRING_CMD_DIAG_CAPS << ":"
+            << "       " << "Caps:"
 #ifdef __STDC__
             << " +stdc"
 #endif
@@ -126,18 +125,17 @@ TRING_CMD_DIAG_COMPILER
   else
     compliance = format (level);
 #endif
-  std::cout << " " << STRING_CMD_DIAG_COMPLIANCE
-            << ": "
+  std::cout << " Compliance: "
             << compliance
             << "\n\n";
 
-  std::cout << bold.colorize (STRING_CMD_DIAG_FEATURES)
+  std::cout << bold.colorize ("Build Features")
             << "\n"
 
   // Build date.
-            << "      " << STRING_CMD_DIAG_BUILT << ": " << __DATE__ << " " << __TIME__ << "\n"
+            << "      " << "Built: " << __DATE__ << " " << __TIME__ << "\n"
 #ifdef HAVE_COMMIT
-            << "     " << STRING_CMD_DIAG_COMMIT << ": " << COMMIT << "\n"
+            << "     " << "Commit: " << COMMIT << "\n"
 #endif
             << "      CMake: " << CMAKE_VERSION << "\n";
 
@@ -161,7 +159,7 @@ TRING_CMD_DIAG_COMPILER
 #endif
             << "\n\n";
 
-  std::cout << bold.colorize (STRING_CMD_DIAG_CONFIG)
+  std::cout << bold.colorize ("Configuration")
             << "\n";
 
   char* env = getenv ("TASKRC");
