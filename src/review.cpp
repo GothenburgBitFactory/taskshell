@@ -48,7 +48,6 @@
 #include <shared.h>
 #include <format.h>
 #include <util.h>
-#include <i18n.h>
 
 std::string getResponse (const std::string&);
 
@@ -83,7 +82,7 @@ static void editTask (const std::string& uuid)
 
   command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_MODIFIED << "\n\n";
+  std::cout << "Modified.\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +90,7 @@ static void reviewTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_REVIEWED << "\n\n";
+  std::cout << "Marked as reviewed.\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +98,7 @@ static void completeTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " done";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_COMPLETED << "\n\n";
+  std::cout << "Completed.\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -107,7 +106,7 @@ static void deleteTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " delete";
   system (command.c_str ());
-  std::cout << STRING_REVIEW_DELETED << "\n\n";
+  std::cout << "Deleted.\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,9 +119,17 @@ static const std::string reviewNothing ()
 static const std::string reviewStart (
   unsigned int width)
 {
-  std::string welcome = STRING_REVIEW_INTRO_1 "\n\n"
-                        STRING_REVIEW_INTRO_2 "\n\n"
-                        STRING_REVIEW_INTRO_3;
+  std::string welcome = "The review process is important for keeping your list "
+                        "accurate, so you are working on the right thing.\n"
+                        "\n"
+                        "For each task you are shown, look at the metadata. "
+                        "Determine whether the task needs to be changed (enter "
+                        "'e' to edit), or whether it is accurate ('enter' or "
+                        "'r' to mark as reviewed). You may skip a task ('s') "
+                        "but a skipped task is not considered reviewed.\n"
+                        "\n"
+                        "You may stop at any time, and resume later right "
+                        "where you left off. See 'man tasksh' for more details.";
 
   std::vector <std::string> lines;
   wrapText (lines, welcome, width, false);
@@ -164,7 +171,7 @@ static const std::string banner (
 static const std::string menu ()
 {
   Color text ("color15 on gray6");
-  return text.colorize (" " STRING_REVIEW_PROMPT " ");
+  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (c)ompleted, (d)eleted, (q)uit ");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +223,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
 
     else
     {
-      std::cout << format (STRING_REVIEW_UNRECOGNIZED, response) << "\n";
+      std::cout << format ("Command '{1}' is not recognized.", response) << "\n";
     }
 
     // Note that just hitting <Enter> yields an empty command, which does
@@ -224,7 +231,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
   }
 
   std::cout << "\n"
-            << format (STRING_REVIEW_END, reviewed, total)
+            << format ("End of review. {1} out of {2} tasks reviewed.", reviewed, total)
             << "\n\n";
 }
 
