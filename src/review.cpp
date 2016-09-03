@@ -47,7 +47,6 @@
 #include <Lexer.h>
 #include <shared.h>
 #include <format.h>
-#include <util.h>
 
 std::string getResponse (const std::string&);
 

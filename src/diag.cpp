@@ -35,7 +35,6 @@
 #include <Color.h>
 #include <shared.h>
 #include <format.h>
-#include <util.h>
 
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
