@@ -33,7 +33,7 @@ from datetime import datetime
 # Ensure python finds the local simpletap module
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from basetest import Timew, TestCase
+from basetest import Tasksh, TestCase
 
 # Test methods available:
 #     self.assertEqual(a, b)
@@ -63,7 +63,7 @@ class TestBugNumber(TestCase):
         """Executed before each test in the class"""
         # Used to initialize objects that should be re-initialized or
         # re-created for each individual test
-        self.t = Clog()
+        self.t = Tasksh()
 
     def test_foo(self):
         """Test foo"""
