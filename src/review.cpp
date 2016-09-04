@@ -82,7 +82,7 @@ static void editTask (const std::string& uuid)
 
   command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << "Modified.\n\n";
+  std::cout << "Modified.\n\n\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ static void reviewTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
   system (command.c_str ());
-  std::cout << "Marked as reviewed.\n\n";
+  std::cout << "Marked as reviewed.\n\n\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ static void completeTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " done";
   system (command.c_str ());
-  std::cout << "Completed.\n\n";
+  std::cout << "Completed.\n\n\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,7 +106,7 @@ static void deleteTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " delete";
   system (command.c_str ());
-  std::cout << "Deleted.\n\n";
+  std::cout << "Deleted.\n\n\n\n";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
