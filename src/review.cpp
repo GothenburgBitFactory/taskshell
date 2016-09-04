@@ -86,6 +86,23 @@ static void editTask (const std::string& uuid)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+static void modifyTask (const std::string& uuid)
+{
+  Color text ("color15 on gray6");
+  std::string modifications;
+  do
+  {
+    modifications = getResponse (text.colorize (" Enter modification args [example: +tag -tag /teh/the/ project:X] ") + " ");
+  }
+  while (modifications == "");
+
+  std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify " + modifications;
+  system (command.c_str ());
+
+  std::cout << "Modified.\n\n\n\n";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 static void reviewTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " modify reviewed:now";
@@ -171,15 +188,20 @@ static const std::string banner (
 static const std::string menu ()
 {
   Color text ("color15 on gray6");
-  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (c)ompleted, (d)eleted, (q)uit ");
+  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)ompleted, (d)eleted, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 static void reviewLoop (const std::vector <std::string>& uuids, unsigned int limit, bool autoClear)
 {
-  unsigned int reviewed = 0;
-  auto total = std::min (static_cast <unsigned int> (uuids.size ()), limit);
   auto width = getWidth ();
+  unsigned int reviewed = 0;
+
+  // If a limit was specified ('review 10'), then it should override the data
+  // set size, if it is smaller.
+  unsigned int total = uuids.size ();
+  if (limit)
+    total = std::min (total, limit);
 
   if (total == 0)
   {
@@ -204,33 +226,44 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
              dummy,
              description);
 
-    std::cout << banner (current + 1, total, width, Lexer::trimRight (description, "\n"));
-
-    // Use 'system' to run the command and show the output.
-    std::string command = "task " + uuid + " information";
-    system (command.c_str ());
-
-    // Display prompt, get input.
-    auto response = getResponse (menu ());
-
-         if (response == "e") { editTask (uuid);                                   }
-    else if (response == "s") { std::cout << "Skipped\n\n"; ++current;             }
-    else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
-    else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
-    else if (response == "")  { reviewTask (uuid);          ++current; ++reviewed; }
-    else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
-    else if (response == "q") { break;                                             }
-
-    else
+    std::string response;
+    bool repeat;
+    do
     {
-      std::cout << format ("Command '{1}' is not recognized.", response) << "\n";
+      repeat = false;
+      std::cout << banner (current + 1, total, width, Lexer::trimRight (description, "\n"));
+
+      // Use 'system' to run the command and show the output.
+      std::string command = "task " + uuid + " information";
+      system (command.c_str ());
+
+      // Display prompt, get input.
+      response = getResponse (menu ());
+
+           if (response == "e") { editTask (uuid);                                   }
+           if (response == "m") { modifyTask (uuid);          repeat = true;         }
+      else if (response == "s") { std::cout << "Skipped\n\n"; ++current;             }
+      else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
+      else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
+      else if (response == "")  { reviewTask (uuid);          ++current; ++reviewed; }
+      else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
+      else if (response == "q") { break;                                             }
+
+      else
+      {
+        std::cout << format ("Command '{1}' is not recognized.", response) << "\n";
+      }
+
+      // Note that just hitting <Enter> yields an empty command, which does
+      // nothing but advance to the next task.
+
+      if (autoClear)
+        std::cout << "\033[2J\033[0;0H";
     }
+    while (repeat);
 
-    // Note that just hitting <Enter> yields an empty command, which does
-    // nothing but advance to the next task.
-
-    if (autoClear)
-      std::cout << "\033[2J\033[0;0H";
+    if (response == "q")
+      break;
   }
 
   std::cout << "\n"
