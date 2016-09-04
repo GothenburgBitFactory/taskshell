@@ -249,20 +249,26 @@ int cmdReview (const std::vector <std::string>& args)
   auto status = execute ("task", {"_get", "rc.uda.reviewed.type"}, input, output);
   if (status || output != "date\n")
   {
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.type",  "date"},     input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.label", "Reviewed"}, input, output);
+    if (confirm ("Tasksh needs to define a 'reviewed' UDA of type 'date' for all tasks.  Ok to proceed?"))
+    {
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.type",  "date"},     input, output);
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "uda.reviewed.label", "Reviewed"}, input, output);
+    }
   }
 
   // Configure '_reviewed' report, but only if necessary.
   status = execute ("task", {"_get", "rc.report._reviewed.columns"}, input, output);
   if (status || output != "uuid\n")
   {
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.description",
-                      "Tasksh review report.  Adjust the filter to your needs."                                              }, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"               }, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+,modified+"}, input, output);
-    execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
-                      "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"                         }, input, output);
+    if (confirm ("Tasksh needs to define a '_reviewed' report to identify tasks needing review.  Ok to proceed?"))
+    {
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.description",
+                        "Tasksh review report.  Adjust the filter to your needs."                                              }, input, output);
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"               }, input, output);
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+,modified+"}, input, output);
+      execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
+                        "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"                         }, input, output);
+    }
   }
 
   // Obtain a list of UUIDs to review.
