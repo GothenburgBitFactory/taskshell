@@ -29,6 +29,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <stdlib.h>
 
 #ifdef HAVE_READLINE
@@ -174,10 +175,10 @@ static const std::string menu ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void reviewLoop (const std::vector <std::string>& uuids, int limit)
+static void reviewLoop (const std::vector <std::string>& uuids, unsigned int limit)
 {
-  auto reviewed = 0;
-  auto total = uuids.size ();
+  unsigned int reviewed = 0;
+  auto total = std::min (static_cast <unsigned int> (uuids.size ()), limit);
   auto width = getWidth ();
 
   if (total == 0)
@@ -238,7 +239,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, int limit)
 int cmdReview (const std::vector <std::string>& args)
 {
   // Is there a specified limit?
-  auto limit = 0;
+  unsigned int limit = 0;
   if (args.size () == 2)
     limit = strtol (args[1].c_str (), NULL, 10);
 
