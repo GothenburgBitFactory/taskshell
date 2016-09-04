@@ -44,7 +44,7 @@
 // tasksh commands.
 int cmdHelp ();
 int cmdDiagnostics ();
-int cmdReview (const std::vector <std::string>&);
+int cmdReview (const std::vector <std::string>&, bool);
 int cmdShell (const std::vector <std::string>&);
 std::string promptCompose ();
 std::string findTaskwarrior ();
@@ -99,13 +99,17 @@ const std::string getResponse (const std::string& prompt)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static int commandLoop ()
+static int commandLoop (bool autoClear)
 {
   // Compose the prompt.
   std::string prompt = promptCompose ();
 
   // Display prompt, get input.
   std::string command = getResponse (prompt);
+
+  // Obey Taskwarrior's rc.tasksh.autoclear.
+  if (autoClear)
+    std::cout << "\033[2J\033[0;0H";
 
   int status = 0;
   if (command != "")
@@ -117,7 +121,7 @@ static int commandLoop ()
     else if (closeEnough ("quit",        args[0], 3)) status = -1;
     else if (closeEnough ("help",        args[0], 3)) status = cmdHelp ();
     else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics ();
-    else if (closeEnough ("review",      args[0], 3)) status = cmdReview (args);
+    else if (closeEnough ("review",      args[0], 3)) status = cmdReview (args, autoClear);
     else if (closeEnough ("exec",        args[0], 3) ||
              args[0][0] == '!')                       status = cmdShell (args);
     else if (command != "")
@@ -148,8 +152,20 @@ int main (int argc, const char** argv)
   {
     try
     {
+      // Get the Taskwarrior rc.tasksh.autoclear Boolean setting.
+      bool autoClear = false;
+      std::string input;
+      std::string output;
+      execute ("task", {"_get", "rc.tasksh.autoclear"}, input, output);
+      output = lowerCase (output);
+      autoClear = (output == "true\n" ||
+                   output == "1\n"    ||
+                   output == "y\n"    ||
+                   output == "yes\n"  ||
+                   output == "on\n");
+
       welcome ();
-      while ((status = commandLoop ()) == 0)
+      while ((status = commandLoop (autoClear)) == 0)
         ;
     }
 

@@ -4,6 +4,8 @@
           (Thanks to Jörg Krause, Ben Boeckel).
 - TW-1845 Cygwin build fails, missing get_current_dir_name
           (thanks to hosaka).
+- TS-11   Autoclear in the Task Shell
+          (thanks to Lars Kumbier).
 - TS-24   add review option (m)odify
           (thanks to David Patrick).
 - Implemented 'review' command.

@@ -175,7 +175,7 @@ static const std::string menu ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static void reviewLoop (const std::vector <std::string>& uuids, unsigned int limit)
+static void reviewLoop (const std::vector <std::string>& uuids, unsigned int limit, bool autoClear)
 {
   unsigned int reviewed = 0;
   auto total = std::min (static_cast <unsigned int> (uuids.size ()), limit);
@@ -228,6 +228,9 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
 
     // Note that just hitting <Enter> yields an empty command, which does
     // nothing but advance to the next task.
+
+    if (autoClear)
+      std::cout << "\033[2J\033[0;0H";
   }
 
   std::cout << "\n"
@@ -236,7 +239,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdReview (const std::vector <std::string>& args)
+int cmdReview (const std::vector <std::string>& args, bool autoClear)
 {
   // Is there a specified limit?
   unsigned int limit = 0;
@@ -284,7 +287,7 @@ int cmdReview (const std::vector <std::string>& args)
 
   // Review the set of UUIDs.
   std::vector <std::string> uuids = split (Lexer::trimRight (output, "\n"), '\n');
-  reviewLoop (uuids, limit);
+  reviewLoop (uuids, limit, autoClear);
   return 0;
 }
 
