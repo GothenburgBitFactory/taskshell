@@ -15,7 +15,7 @@
 - TS-24   add review option (m)odify
           (thanks to David Patrick).
 - TS-28   Please add a (m)odify feature for review
-          (thanks to Ian R. Learmonth).
+          (thanks to Iain R. Learmonth).
 - Implemented 'review' command.
 - Implemented 'diag' command.
 - Added 'review N' option, to specify the number of tasks you would like to
