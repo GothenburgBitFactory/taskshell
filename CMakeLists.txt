@@ -74,6 +74,6 @@ set (CPACK_SOURCE_GENERATOR "TGZ")
 set (CPACK_SOURCE_PACKAGE_FILE_NAME ${PACKAGE_NAME}-${PACKAGE_VERSION})
 set (CPACK_SOURCE_IGNORE_FILES  "CMakeCache" "CMakeFiles" "CPackConfig" "CPackSourceConfig"
                                 "_CPack_Packages" "cmake_install" "install_manifest" "Makefile$"
-                                "test" "package-config" "misc/*" "src/tasksh$"
+                                "test" "package-config" "misc/*" "src/tasksh$" "README.md"
                                 "/\\\\.gitignore" "/\\\\.git/" "swp$")
 include (CPack)

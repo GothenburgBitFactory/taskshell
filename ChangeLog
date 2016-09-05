@@ -1,4 +1,6 @@
-1.1.0 () -
+------ current release ---------------------------
+
+1.1.0 (2016-09-06)
 
 - TD-120  Missing cmakedefine for HAVE_GET_CURRENT_DIR_NAME
           (Thanks to Jörg Krause, Ben Boeckel).
@@ -16,7 +18,7 @@
   review.
 - Integrated libshared.git.
 
------- current release ---------------------------
+------ old releases ------------------------------
 
 1.0.0 (2014-12-21) 5934dfcefac6d037a359bc733a8382e42e32552e
 
