@@ -1,25 +1,19 @@
 
-New Features in tasksh 1.1.0
+New Features in tasksh 1.2.0
 
-  - Support for a GTD-like review session.
+  - 
 
-New commands in tasksh 1.1.0
+New commands in tasksh 1.2.0
 
-  - 'review' begins an interactive review session
-  - 'diag' shows diagnostic info for problem solving
+  - 
 
-New configuration options in tasksh 1.1.0
+New configuration options in tasksh 1.2.0
 
-  - The 'tasksh.autoclear' setting in Taskwarrior is used by Tasksh to clear
-    the terminal before every command, if set to '1'.
+  - 
 
 Known Issues
 
-  - Spaces in project names in tasksh
-    https://bug.tasktools.org/browse/TS-3
-
-  - Tasksh throws errors on unescaped parentheses
-    https://bug.tasktools.org/browse/TS-23
+  - 
 
 Tasksh has been built and tested on the following configurations:
 
