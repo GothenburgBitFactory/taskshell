@@ -9,11 +9,14 @@ tasksh \- Interactive taskwarrior shell
 .B tasksh --version
 
 .SH DESCRIPTION
-The tasksh program can be used to create a more immersive taskwarrior
-environment.  Any task command you run outside the shell can also be run inside
+Tasksh can be used to create a more immersive taskwarrior environment.
+Any task command you run outside the shell can also be run inside
 the shell, without the need to prefix every command with "task".
 
 When built with libreadline, tasksh provides command editing and history.
+
+Tasksh has an integrated 'review' command that leads you through an interactive
+review session.
 
 Tasksh supports all recent versions of Taskwarrior.
 
@@ -26,23 +29,37 @@ Taskwarrior.
 Displays settings pertinent to tasksh, for diagnosing problems.
 
 .TP
+.B exec <commands>
+This command allows you to run shell commands from within Tasksh. This is ideal
+for accessing man pages such as this. The '!' command can be used in place of
+the 'exec' keyword. Once the command is run, control returns to Tasksh.
+
+.TP
 .B exit/quit
 These commands cause tasksh to terminate, returning you to your system shell.
 
 .TP
 .B help
-Shows how to obtain help.
+Shows a summary of commands, and how to obtain help.
 
 .TP
 .B review [N]
 Begins an interactive review session, where you can mark tasks as reviewed,
-modify them using your text editor, or skip them. You can terminate a review
-session at any time.
-Finds your pending and waiting tasks that need to be reviewed. By default this
-means any task with a missing 'reviewed' date, or with a 'reviewed' date that
-is older than a week. This means if you run the 'review' command to completion,
-a subsequent 'review' command will find no tasks to review, until a week has
-elapsed.
+edit them using your text editor, provide modification commands, or skip them.
+You can terminate a review session at any time, and the next review session
+will resume at the right place.
+
+To find tasks needing review, the '_reviewed' custom report is created and run,
+which filters tasks that have a missing 'reviewed' UDA date, or have not been
+reviewed for a week.
+
+This means that if you run a review session to completion, there will be no
+need to review again for a week, and the review command will simply do nothing
+until then.
+
+The one week review cycle is defined by the '_reviewed' custom report, which
+can be modified if you prefer a monthly review cycle.
+
 If 'N' is provided, the session is limited to reviewing only N tasks.
 
 Note: requires Taskwarrior 2.5.0 or later.
@@ -114,11 +131,10 @@ ID Project Pri Due        Active Age   Description
 .br
 
 .SH CONFIGURATION
-Tasksh piggybacks on Taskwarrior's .taskrc configuration file, and stores
-several settings there. If you use a non-standard location for your .task
-database, and .taskrc file, Tasksh will not find them unless you set the
-TASKDATA and TASKRC environment variables. See 'man taskrc' for more
-details.
+Tasksh piggybacks on Taskwarrior's .taskrc configuration file, and refers
+to settings there. If you use a non-standard location for your .task database
+, and .taskrc file, Tasksh will not find them unless you set the TASKDATA and
+TASKRC environment variables. See 'man taskrc' for more details.
 
 The review command storeѕ a UDA ('reviewed') and report definition ('_reviewed').
 
