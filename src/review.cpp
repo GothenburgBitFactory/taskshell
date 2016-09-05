@@ -188,7 +188,7 @@ static const std::string banner (
 static const std::string menu ()
 {
   Color text ("color15 on gray6");
-  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)ompleted, (d)eleted, (q)uit ") + " ";
+  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
