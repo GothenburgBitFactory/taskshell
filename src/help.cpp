@@ -31,7 +31,16 @@
 int cmdHelp ()
 {
   std::cout << "\n"
-            << "Run 'man tasksh' from your shell prompt.\nRun '! man tasksh' from inside tasksh.\n"
+            << "  Commands:\n"
+            << "    tasksh> list             Or any other Taskwarrior command\n"
+            << "    tasksh> review [N]       Task review session, with optional cutoff after N tasks\n"
+            << "    tasksh> exec ls -al      Any shell command.  May also use '!ls -al'\n"
+            << "    tasksh> help             Tasksh help\n"
+            << "    tasksh> diagnostics      Tasksh diagnostics\n"
+            << "    tasksh> quit             End of session. May also use 'exit'\n"
+            << "\n"
+            << "Run 'man tasksh' from your shell prompt.\n"
+            << "Run '! man tasksh' from inside tasksh.\n"
             << "\n";
   return 0;
 }
