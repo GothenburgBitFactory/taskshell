@@ -6,7 +6,7 @@ set (HAVE_CMAKE true)
 project (tasksh)
 include (CXXSniffer)
 
-set (PROJECT_VERSION "1.1.0")
+set (PROJECT_VERSION "1.2.0")
 
 include (CheckFunctionExists)
 include (CheckStructHasMember)
