@@ -30,6 +30,7 @@
 #include <string>
 #include <cstring>
 #include <stdlib.h>
+#include <unistd.h>
 #include <shared.h>
 
 #ifdef HAVE_READLINE
@@ -125,6 +126,8 @@ static int commandLoop (bool autoClear)
       // cause the shell to terminate.
     }
   }
+  else
+    status = 1;
 
   return status;
 }
@@ -155,7 +158,9 @@ int main (int argc, const char** argv)
                    output == "yes\n"  ||
                    output == "on\n");
 
-      welcome ();
+      if (isatty (fileno (stdin)))
+        welcome ();
+
       while ((status = commandLoop (autoClear)) == 0)
         ;
     }
