@@ -69,6 +69,7 @@ const std::string getResponse (const std::string& prompt)
   if (! line_read)
   {
     std::cout << "\n";
+    response = "<EOF>";
   }
   else
   {
@@ -105,12 +106,17 @@ static int commandLoop (bool autoClear)
     std::cout << "\033[2J\033[0;0H";
 
   int status = 0;
-  if (command != "")
+  if (! isatty (fileno (stdin)) && command == "")
+  {
+    status = -1;
+  }
+  else if (command != "")
   {
     std::vector <std::string> args = split (command, ' ');
 
     // Dispatch command.
-         if (closeEnough ("exit",        args[0], 3)) status = -1;
+         if (args[0] == "<EOF>")                      status = -1;
+    else if (closeEnough ("exit",        args[0], 3)) status = -1;
     else if (closeEnough ("quit",        args[0], 3)) status = -1;
     else if (closeEnough ("help",        args[0], 3)) status = cmdHelp ();
     else if (closeEnough ("diagnostics", args[0], 3)) status = cmdDiagnostics ();
@@ -127,8 +133,6 @@ static int commandLoop (bool autoClear)
       // cause the shell to terminate.
     }
   }
-  else
-    status = 1;
 
   return status;
 }

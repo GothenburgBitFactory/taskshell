@@ -2,6 +2,8 @@
 
 - TS-29   tasksh hangs trying to read task from stdin
           (thanks to ilove zfs).
+- TS-32   control-d to exit
+          (thanks to Eric Hymowitz).
 
 ------ current release ---------------------------
 
