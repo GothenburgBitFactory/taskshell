@@ -144,7 +144,7 @@ If set to "1", causes each tasksh command to be preceded by a 'clear screen' and
 cursor reset. Default is "0".
 
 .SH "CREDITS & COPYRIGHTS"
-Copyright (C) 2006 \- 2016 P. Beckingham, F. Hernandez.
+Copyright (C) 2006 \- 2017 P. Beckingham, F. Hernandez.
 
 This man page was originally written by Federico Hernandez.
 
