@@ -4,6 +4,8 @@
           (thanks to ilove zfs).
 - TS-32   control-d to exit
           (thanks to Eric Hymowitz).
+- TS-34   Tasksh throw a warning at the end of a review command
+          (thanks to bjonnh).
 
 ------ current release ---------------------------
 

@@ -241,7 +241,7 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
       response = getResponse (menu ());
 
            if (response == "e") { editTask (uuid);                                   }
-           if (response == "m") { modifyTask (uuid);          repeat = true;         }
+      else if (response == "m") { modifyTask (uuid);          repeat = true;         }
       else if (response == "s") { std::cout << "Skipped\n\n"; ++current;             }
       else if (response == "c") { completeTask (uuid);        ++current; ++reviewed; }
       else if (response == "d") { deleteTask (uuid);          ++current; ++reviewed; }
