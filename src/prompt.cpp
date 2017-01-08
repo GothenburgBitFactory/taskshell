@@ -29,8 +29,7 @@
 #include <string>
 #include <Color.h>
 
-static const char* contextColors[] =
-{
+static std::vector <std::string> contextColors = {
   "bold white on red",
   "bold white on blue",
   "bold white on green",
@@ -39,8 +38,6 @@ static const char* contextColors[] =
   "black on yellow",
   "black on white",
 };
-
-#define NUM_COLORS (sizeof (contextColors) / sizeof (contextColors[0]))
 
 static std::vector <std::string> contexts;
 
@@ -73,21 +70,14 @@ int promptAdd (const std::string& context)
 std::string composeContexts (bool pretty /* = false */)
 {
   std::string combined;
-  for (unsigned int i = 0; i < contexts.size (); ++i)
-  {
+  for (unsigned int i = 0; i < contexts.size (); i++)
     if (pretty)
-    {
-      combined += (i ? " " : "")
+      combined += (combined != "" ? " " : "")
                 + std::string ("\001")
-                + Color::colorize ("\002 " + contexts[i] + " \001", contextColors[i % NUM_COLORS])
+                + Color::colorize ("\002 " + contexts[i] + " \001", contextColors[i % contextColors.size ()])
                 + "\002";
-
-    }
     else
-    {
-      combined += (i ? " " : "") + contexts[i];
-    }
-  }
+      combined += (combined != "" ? " " : "") + contexts[i];
 
   if (combined != "")
     combined += ' ';
@@ -103,9 +93,9 @@ std::string promptCompose ()
   // TODO - The accumulated context, as colored tokens.
   // TODO - sync status
   // TODO - time
-  std::string decoration = composeContexts (true);
+  auto decoration = composeContexts (true);
   if (decoration.length ())
-    return "task " + composeContexts (true) + "> ";
+    return "task " + decoration + "> ";
 
   return "tasksh> ";
 }
