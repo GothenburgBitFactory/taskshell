@@ -126,7 +126,7 @@ int cmdDiagnostics ()
   std::cout << bold.colorize ("Configuration")
             << "\n";
 
-  char* env = getenv ("TASKRC");
+  auto env = getenv ("TASKRC");
   std::cout << "     TASKRC: "
             << (env ? env : "")
             << "\n";
@@ -140,12 +140,9 @@ int cmdDiagnostics ()
   std::string path (getenv ("PATH"));
   std::cout << "       PATH: " << path << "\n";
 
-  std::vector <std::string> paths = split (path, ':');
-
-  std::vector <std::string>::iterator i;
-  for (i = paths.begin (); i != paths.end (); ++i)
+  for (const auto& i : split (path, ':'))
   {
-    File task (*i + "/task");
+    File task (i + "/task");
     if (task.exists ())
     {
       std::string input;
@@ -153,8 +150,8 @@ int cmdDiagnostics ()
       execute ("task", {"--version"}, input, output);
 
       std::cout << "Taskwarrior: "
-                << (*i + "/task")
-                << " "
+                << i
+                << "/task "
                 << output; // Still has \n
     }
   }
