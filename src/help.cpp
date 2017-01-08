@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int cmdHelp ()
 {
-  std::cout << "\n"
+  std::cout << '\n'
             << "  Commands:\n"
             << "    tasksh> list             Or any other Taskwarrior command\n"
             << "    tasksh> review [N]       Task review session, with optional cutoff after N tasks\n"
@@ -38,10 +38,10 @@ int cmdHelp ()
             << "    tasksh> help             Tasksh help\n"
             << "    tasksh> diagnostics      Tasksh diagnostics\n"
             << "    tasksh> quit             End of session. May also use 'exit'\n"
-            << "\n"
+            << '\n'
             << "Run 'man tasksh' from your shell prompt.\n"
             << "Run '! man tasksh' from inside tasksh.\n"
-            << "\n";
+            << '\n';
   return 0;
 }
 
