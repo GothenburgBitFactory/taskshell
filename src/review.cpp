@@ -65,12 +65,6 @@ static unsigned int getWidth ()
       width = buff[1];
   }
 
-  // Ncurses does this, and perhaps we need to as well, to avoid a problem on
-  // Cygwin where the display goes right up to the terminal width, and causes
-  // an odd color wrapping problem.
-//  if (config.getBoolean ("avoidlastcolumn"))
-//    --width;
-
   return width;
 }
 
@@ -137,7 +131,7 @@ static const std::string reviewStart (
   unsigned int width)
 {
   std::string welcome = "The review process is important for keeping your list "
-                        "accurate, so you are working on the right thing.\n"
+                        "accurate, so you are working on the right tasks.\n"
                         "\n"
                         "For each task you are shown, look at the metadata. "
                         "Determine whether the task needs to be changed (enter "
@@ -187,8 +181,7 @@ static const std::string banner (
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string menu ()
 {
-  Color text ("color15 on gray6");
-  return text.colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
+  return Color ("color15 on gray6").colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -319,7 +312,7 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
                     input, output);
 
   // Review the set of UUIDs.
-  std::vector <std::string> uuids = split (Lexer::trimRight (output, "\n"), '\n');
+  auto uuids = split (Lexer::trimRight (output, "\n"), '\n');
   reviewLoop (uuids, limit, autoClear);
   return 0;
 }
