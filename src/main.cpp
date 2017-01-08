@@ -84,9 +84,7 @@ const std::string getResponse (const std::string& prompt)
   std::cout << prompt;
   std::getline (std::cin, response);
   if (std::cin.eof () == 1)
-  {
     std::cout << "\n";
-  }
 #endif
 
   return response;
@@ -96,10 +94,10 @@ const std::string getResponse (const std::string& prompt)
 static int commandLoop (bool autoClear)
 {
   // Compose the prompt.
-  std::string prompt = promptCompose ();
+  auto prompt = promptCompose ();
 
   // Display prompt, get input.
-  std::string command = getResponse (prompt);
+  auto command = getResponse (prompt);
 
   // Obey Taskwarrior's rc.tasksh.autoclear.
   if (autoClear)
@@ -112,7 +110,7 @@ static int commandLoop (bool autoClear)
   }
   else if (command != "")
   {
-    std::vector <std::string> args = split (command, ' ');
+    auto args = split (command, ' ');
 
     // Dispatch command.
          if (args[0] == "<EOF>")                      status = -1;
