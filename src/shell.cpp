@@ -40,7 +40,7 @@ int cmdShell (const std::vector <std::string>& args)
     combined = combined.substr (1);
 
   system (combined.c_str ());
-  return 0;
+  return 0; // Ignore system return code.
 }
 
 ////////////////////////////////////////////////////////////////////////////////
