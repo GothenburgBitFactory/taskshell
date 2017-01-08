@@ -48,33 +48,8 @@ int cmdDiagnostics ()
 
   std::cout << "\n"
             << bold.colorize (PACKAGE_STRING)
-            << "\n";
-
-  std::cout << "   " << "Platform: "
-            <<
-#if defined (DARWIN)
-               "Darwin"
-#elif defined (SOLARIS)
-               "Solaris"
-#elif defined (CYGWIN)
-               "Cygwin"
-#elif defined (HAIKU)
-               "Haiku"
-#elif defined (OPENBSD)
-               "OpenBSD"
-#elif defined (FREEBSD)
-               "FreeBSD"
-#elif defined (NETBSD)
-               "NetBSD"
-#elif defined (LINUX)
-               "Linux"
-#elif defined (KFREEBSD)
-TRING_CMD_DIAG_COMPILER
-#elif defined (GNUHURD)
-               "GNU/Hurd"
-#else
-               "Unknown"
-#endif
+            << "\n"
+            << "   " << "Platform: " << osName ()
             << "\n\n";
 
   // Compiler.
