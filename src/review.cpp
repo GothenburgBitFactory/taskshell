@@ -296,7 +296,7 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
       execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.columns", "uuid"               }, input, output);
       execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.sort",    "reviewed+,modified+"}, input, output);
       execute ("task", {"rc.confirmation:no", "rc.verbose:nothing", "config", "report._reviewed.filter",
-                        "( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )"                         }, input, output);
+                        "( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )"                         }, input, output);
     }
   }
 

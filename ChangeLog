@@ -6,6 +6,9 @@
           (thanks to Eric Hymowitz).
 - TS-34   Tasksh throw a warning at the end of a review command
           (thanks to bjonnh).
+- Review report now defaults to 6 days instead of 1 weeķ, which is more
+  convenient for those who review weekly
+          (thanks to Dirk Deimeke).
 
 ------ current release ---------------------------
 
