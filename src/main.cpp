@@ -85,8 +85,8 @@ const std::string getResponse (const std::string& prompt)
   std::getline (std::cin, response);
   if (std::cin.eof () == 1)
   {
-      response = "<EOF>";
     std::cout << "\n";
+    response = "<EOF>";
   }
 #endif
 

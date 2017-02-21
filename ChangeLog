@@ -3,7 +3,7 @@
 - TS-29   tasksh hangs trying to read task from stdin
           (thanks to ilove zfs).
 - TS-32   control-d to exit
-          (thanks to Eric Hymowitz).
+          (thanks to Eric Hymowitz, Paul Fenwick).
 - TS-34   Tasksh throw a warning at the end of a review command
           (thanks to bjonnh).
 - Review report now defaults to 6 days instead of 1 weeķ, which is more
