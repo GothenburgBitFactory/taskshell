@@ -136,7 +136,8 @@ to settings there. If you use a non-standard location for your .task database
 , and .taskrc file, Tasksh will not find them unless you set the TASKDATA and
 TASKRC environment variables. See 'man taskrc' for more details.
 
-The review command storeѕ a UDA ('reviewed') and report definition ('_reviewed').
+The review command storeѕ a UDA ('reviewed') and report definition ('_reviewed')
+in the Taskwarrior .taskrc file.
 
 .TP
 .B tasksh.autoclear=1
