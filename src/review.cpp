@@ -32,8 +32,6 @@
 #include <algorithm>
 #include <stdlib.h>
 
-#include <iterator>
-
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -301,7 +299,7 @@ static void configureReport()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-static bool is_number (const std::string& s)
+static bool isNumber (const std::string& s)
 {
     return !s.empty () && std::find_if(s.begin (),
             s.end (), [] (char c) { return !std::isdigit (c); }) == s.end ();
@@ -322,7 +320,7 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
   {
     auto begin = args.begin ();
     auto end = args.end ();
-    if (is_number (args.back ())) // if last argument is numeric, treat it as limit.
+    if (isNumber (args.back ())) // if last argument is numeric, treat it as limit.
     {
       limit = strtol (args.back ().c_str (), NULL, 10);
       std::advance(end, -1);
@@ -332,7 +330,6 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
     {
       with_filter = true;
       std::copy (begin, end, std::back_inserter (filter));
-      //TODO: maybe also add "status:pending" ?
       filter.emplace_back ("uuids");
     }
   }
