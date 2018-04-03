@@ -32,6 +32,8 @@
 #include <algorithm>
 #include <stdlib.h>
 
+#include <iterator>
+
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -266,16 +268,12 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int cmdReview (const std::vector <std::string>& args, bool autoClear)
+static void configureReport()
 {
-  // Is there a specified limit?
-  unsigned int limit = 0;
-  if (args.size () == 2)
-    limit = strtol (args[1].c_str (), NULL, 10);
-
   // Configure 'reviewed' UDA, but only if necessary.
   std::string input;
   std::string output;
+
   auto status = execute ("task", {"_get", "rc.uda.reviewed.type"}, input, output);
   if (status || output != "date\n")
   {
@@ -300,21 +298,62 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
                         "( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )"                         }, input, output);
     }
   }
+}
 
-  // Obtain a list of UUIDs to review.
-  status = execute ("task",
-                    {
-                      "rc.color=off",
-                      "rc.detection=off",
-                      "rc._forcecolor=off",
-                      "rc.verbose=nothing",
-                      "_reviewed"
-                    },
-                    input, output);
+////////////////////////////////////////////////////////////////////////////////
+int cmdReview (const std::vector <std::string>& args, bool autoClear)
+{
+  // Is there a specified limit?
+  //unsigned int limit = 0;
+  unsigned int limit = std::numeric_limits<unsigned int>::max();
+  int status = 0;
+  bool with_filter = false;
+  std::string input;
+  std::string output;
+  std::vector<std::string> filter;   // here we store our filter arguments
 
-  // Review the set of UUIDs.
-  auto uuids = split (Lexer::trimRight (output, "\n"), '\n');
-  reviewLoop (uuids, limit, autoClear);
+  //if (args.size () == 2)
+    //limit = strtol (args[1].c_str (), NULL, 10);
+  if (args.size () > 1)
+  {
+      with_filter = true;
+      auto begin = args.begin();
+      std::advance(begin, 1);
+      std::copy(begin, args.end(), std::back_inserter(filter));
+      //TODO: maybe also add "status:pending" ?
+      filter.push_back("uuids");
+  }
+
+  configureReport ();
+
+  if (with_filter)
+  {
+    // Obtain list of UUIDs to review, when a filter is given
+    status = execute ("task",
+                        filter,
+                        input, output);
+    // Review the set of UUIDs.
+    auto uuids = split (Lexer::trimRight (output, "\n"), ' ');
+    reviewLoop (uuids, limit, autoClear);
+  }
+  else
+  {
+    // Obtain a list of UUIDs to review.
+    status = execute ("task",
+                        {
+                        "rc.color=off",
+                        "rc.detection=off",
+                        "rc._forcecolor=off",
+                        "rc.verbose=nothing",
+                        "_reviewed"
+                        },
+                        input, output);
+
+    // Review the set of UUIDs.
+    auto uuids = split (Lexer::trimRight (output, "\n"), '\n');
+    reviewLoop (uuids, limit, autoClear);
+  }
+
   return 0;
 }
 
