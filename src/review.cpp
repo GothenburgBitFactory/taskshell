@@ -301,27 +301,40 @@ static void configureReport()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+static bool is_number (const std::string& s)
+{
+    return !s.empty () && std::find_if(s.begin (),
+            s.end (), [] (char c) { return !std::isdigit (c); }) == s.end ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int cmdReview (const std::vector <std::string>& args, bool autoClear)
 {
   // Is there a specified limit?
-  //unsigned int limit = 0;
-  unsigned int limit = std::numeric_limits<unsigned int>::max();
-  int status = 0;
+  unsigned int limit = std::numeric_limits<unsigned int>::max ();
   bool with_filter = false;
   std::string input;
   std::string output;
   std::vector<std::string> filter;   // here we store our filter arguments
 
-  //if (args.size () == 2)
-    //limit = strtol (args[1].c_str (), NULL, 10);
+
   if (args.size () > 1)
   {
+    auto begin = args.begin ();
+    auto end = args.end ();
+    if (is_number (args.back ())) // if last argument is numeric, treat it as limit.
+    {
+      limit = strtol (args.back ().c_str (), NULL, 10);
+      std::advance(end, -1);
+    }
+    std::advance (begin, 1);
+    if (begin != end)
+    {
       with_filter = true;
-      auto begin = args.begin();
-      std::advance(begin, 1);
-      std::copy(begin, args.end(), std::back_inserter(filter));
+      std::copy (begin, end, std::back_inserter (filter));
       //TODO: maybe also add "status:pending" ?
-      filter.push_back("uuids");
+      filter.emplace_back ("uuids");
+    }
   }
 
   configureReport ();
@@ -329,9 +342,7 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
   if (with_filter)
   {
     // Obtain list of UUIDs to review, when a filter is given
-    status = execute ("task",
-                        filter,
-                        input, output);
+    execute ("task", filter, input, output);
     // Review the set of UUIDs.
     auto uuids = split (Lexer::trimRight (output, "\n"), ' ');
     reviewLoop (uuids, limit, autoClear);
@@ -339,15 +350,15 @@ int cmdReview (const std::vector <std::string>& args, bool autoClear)
   else
   {
     // Obtain a list of UUIDs to review.
-    status = execute ("task",
-                        {
-                        "rc.color=off",
-                        "rc.detection=off",
-                        "rc._forcecolor=off",
-                        "rc.verbose=nothing",
-                        "_reviewed"
-                        },
-                        input, output);
+    execute ("task",
+              {
+              "rc.color=off",
+              "rc.detection=off",
+              "rc._forcecolor=off",
+              "rc.verbose=nothing",
+              "_reviewed"
+              },
+              input, output);
 
     // Review the set of UUIDs.
     auto uuids = split (Lexer::trimRight (output, "\n"), '\n');
