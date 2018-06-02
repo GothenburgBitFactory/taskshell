@@ -181,7 +181,7 @@ static const std::string banner (
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string menu ()
 {
-  return Color ("color15 on gray6").colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (i)nformation, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
+  return Color ("color15 on gray6").colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +226,10 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
       repeat = false;
       std::cout << banner (current + 1, total, width, Lexer::trimRight (description, "\n"));
 
+      // Use 'system' to run the command and show the output.
+      std::string command = "task " + uuid + " information";
+      system (command.c_str ());
+
       // Display prompt, get input.
       response = getResponse (menu ());
 
@@ -237,11 +241,6 @@ static void reviewLoop (const std::vector <std::string>& uuids, unsigned int lim
       else if (response == "")  { reviewTask (uuid);          ++current; ++reviewed; }
       else if (response == "r") { reviewTask (uuid);          ++current; ++reviewed; }
       else if (response == "q") { break;                                             }
-      else if (response == "i") {
-        // Use 'system' to run the command and show the output.
-        std::string command = "task " + uuid + " information";
-        system (command.c_str ());
-      }
 
       else
       {
