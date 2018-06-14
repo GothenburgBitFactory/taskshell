@@ -144,6 +144,10 @@ in the Taskwarrior .taskrc file.
 If set to "1", causes each tasksh command to be preceded by a 'clear screen' and
 cursor reset. Default is "0".
 
+.TP
+.B tasksh.contextprompt=1
+If set to "1", will display the context (if set) in the prompt. Default is "0".
+
 .SH "CREDITS & COPYRIGHTS"
 Copyright (C) 2006 \- 2018 P. Beckingham, F. Hernandez.
 

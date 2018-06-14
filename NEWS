@@ -9,7 +9,8 @@ New commands in tasksh 1.3.0
 
 New configuration options in tasksh 1.3.0
 
-  - 
+  - tasksh.contextprompt can be set to on/off to display taskwarrior's context
+    in tasksh's prompt.
 
 Known Issues
 
