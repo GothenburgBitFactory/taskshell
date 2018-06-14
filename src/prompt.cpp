@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2006 - 2017, Paul Beckingham, Federico Hernandez.
+// Copyright 2006 - 2018, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@
 #include <vector>
 #include <string>
 #include <Color.h>
+#include <Lexer.h>
+#include <shared.h>
 
 static std::vector <std::string> contextColors = {
   "bold white on red",
@@ -93,11 +95,22 @@ std::string promptCompose ()
   // TODO - The accumulated context, as colored tokens.
   // TODO - sync status
   // TODO - time
+  std::string prompt = "tasksh";
   auto decoration = composeContexts (true);
   if (decoration.length ())
     return "task " + decoration + "> ";
 
-  return "tasksh> ";
+  // For now, display the context (if any).
+  std::string dummy;;
+  std::string output;
+  execute ("task", {"_get", "rc.context"}, dummy, output);
+  output = Lexer::trimRight (output, "\n");
+
+  if (output != "")
+    prompt += " (" + output + ")";
+  prompt += "> ";
+
+  return prompt;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

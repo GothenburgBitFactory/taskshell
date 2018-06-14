@@ -1,13 +1,13 @@
 
-New Features in tasksh 1.2.0
-
-  - Responds to Ctrl-D by exiting.
-
-New commands in tasksh 1.2.0
+New Features in tasksh 1.3.0
 
   - 
 
-New configuration options in tasksh 1.2.0
+New commands in tasksh 1.3.0
+
+  - 
+
+New configuration options in tasksh 1.3.0
 
   - 
 
@@ -31,10 +31,6 @@ While Tasksh has undergone testing, bugs are sure to remain.  If you
 encounter a bug, please enter a new issue at:
 
   http://bug.tasktools.org
-
-Or you can also report the issue in the forums at:
-
-  http://answers.tasktools.org
 
 Or just send a message to:
 

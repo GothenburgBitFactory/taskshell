@@ -1,3 +1,10 @@
+1.3.0 () -
+
+- TI-91   Timewarrior does not compile on DragonFly
+          (thanks to Michael Neumann).
+
+------ current release ---------------------------
+
 1.2.0 (2017-05-10) 3f4b2284ad19beacd30e202e6c700a36c2b65c60
 
 - TS-29   tasksh hangs trying to read task from stdin
@@ -6,11 +13,13 @@
           (thanks to Eric Hymowitz, Paul Fenwick).
 - TS-34   Tasksh throw a warning at the end of a review command
           (thanks to bjonnh).
+- TW-1936 Tweak tests to have fuller TAP compliance
+          (thanks to Paul J. Fenwick)
 - Review report now defaults to 6 days instead of 1 weeķ, which is more
   convenient for those who review weekly
           (thanks to Dirk Deimeke).
 
------- current release ---------------------------
+------ old releases ------------------------------
 
 1.1.0 (2016-09-06) 464f5ae19f853911e739c2489897aef64345c388
 
@@ -29,8 +38,6 @@
 - Added 'review N' option, to specify the number of tasks you would like to
   review.
 - Integrated libshared.git.
-
------- old releases ------------------------------
 
 1.0.0 (2014-12-21) 5934dfcefac6d037a359bc733a8382e42e32552e
 
