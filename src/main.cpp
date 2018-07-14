@@ -113,7 +113,13 @@ static int commandLoop (bool autoClear)
   }
   else if (command != "")
   {
-    auto args = split (command, ' ');
+    std::vector<std::string> args;
+    std::string n;
+    for (const auto& s : split (command, ' '))
+    {
+       if ((n = trim(s)) != "")
+	 args.push_back(n);
+    }
 
     // Dispatch command.
          if (args[0] == "<EOF>")                      status = -1;
