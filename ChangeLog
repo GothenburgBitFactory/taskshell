@@ -1,7 +1,9 @@
 1.3.0 () -
 
 - TI-91   Timewarrior does not compile on DragonFly
-          (thanks to Michael Neumann).
+          - Thanks to Michael Neumann.
+- #29     [TS-30] Let review use a filter
+          - Thanks to Sebastian Oueste, David West.
 
 ------ current release ---------------------------
 
