@@ -52,10 +52,11 @@ std::string promptCompose ();
 std::string findTaskwarrior ();
 
 ////////////////////////////////////////////////////////////////////////////////
-static void welcome ()
+static void welcome (bool noHelp)
 {
   std::cout << PACKAGE_STRING << "\n";
-  cmdHelp ();
+  if (! noHelp)
+    cmdHelp ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +140,20 @@ static int commandLoop (bool autoClear)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+static bool getBoolFromTaskrc (const std::string& path)
+{
+  std::string input;
+  std::string output;
+  execute ("task", {"_get", path}, input, output);
+  output = lowerCase (output);
+  return output == "true\n" ||
+         output == "1\n"    ||
+         output == "y\n"    ||
+         output == "yes\n"  ||
+         output == "on\n"   ;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int main (int argc, const char** argv)
 {
   int status = 0;
@@ -153,19 +168,11 @@ int main (int argc, const char** argv)
     try
     {
       // Get the Taskwarrior rc.tasksh.autoclear Boolean setting.
-      bool autoClear = false;
-      std::string input;
-      std::string output;
-      execute ("task", {"_get", "rc.tasksh.autoclear"}, input, output);
-      output = lowerCase (output);
-      autoClear = (output == "true\n" ||
-                   output == "1\n"    ||
-                   output == "y\n"    ||
-                   output == "yes\n"  ||
-                   output == "on\n");
+      bool autoClear = getBoolFromTaskrc("rc.tasksh.autoclear");
+      bool noHelp = getBoolFromTaskrc("rc.tasksh.nohelp");
 
       if (isatty (fileno (stdin)))
-        welcome ();
+        welcome (noHelp);
 
       while ((status = commandLoop (autoClear)) == 0)
         ;
