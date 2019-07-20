@@ -103,15 +103,13 @@ std::string promptCompose ()
   std::string dummy;;
   std::string output;
 
-  bool hideContextPrompt = false;
   execute ("task", {"_get", "rc.tasksh.contextprompt"}, dummy, output);
   output = lowerCase (output);
-
-  hideContextPrompt = (output == "no\n"   ||
-		       output == "n\n"     ||
-		       output == "false\n" ||
-		       output == "0\n"     ||
-		       output == "off\n");
+  bool hideContextPrompt = output == "no\n"   ||
+                           output == "n\n"     ||
+                           output == "false\n" ||
+                           output == "0\n"     ||
+                           output == "off\n";
 
   if (!hideContextPrompt)
   {
