@@ -4,7 +4,7 @@
 tasksh \- Interactive taskwarrior shell
 
 .SH SYNOPSIS
-.B tasksh
+.B tasksh [task commands]...
 .br
 .B tasksh --version
 
@@ -17,6 +17,9 @@ When built with libreadline, tasksh provides command editing and history.
 
 Tasksh has an integrated 'review' command that leads you through an interactive
 review session.
+
+If Tasksh is invoked with command line arguments, those are passed straight
+through to taskwarrior.
 
 Tasksh supports all recent versions of Taskwarrior.
 

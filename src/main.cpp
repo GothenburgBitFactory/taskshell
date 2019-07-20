@@ -93,8 +93,7 @@ const std::string getResponse (const std::string& prompt)
   return response;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-static int commandLoop (bool autoClear)
+static const std::string get_response ()
 {
   // Compose the prompt.
   auto prompt = promptCompose ();
@@ -102,6 +101,12 @@ static int commandLoop (bool autoClear)
   // Display prompt, get input.
   auto command = getResponse (prompt);
 
+  return command;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+static int commandLoop (std::string command, bool autoClear)
+{
   // Obey Taskwarrior's rc.tasksh.autoclear.
   if (autoClear)
     std::cout << "\033[2J\033[0;0H";
@@ -144,50 +149,80 @@ static int commandLoop (bool autoClear)
   return status;
 }
 
+static bool should_auto_clear()
+{
+  bool autoClear = false;
+  std::string input;
+  std::string output;
+  execute ("task", {"_get", "rc.tasksh.autoclear"}, input, output);
+  output = lowerCase (output);
+  autoClear = (output == "true\n" ||
+      output == "1\n"    ||
+      output == "y\n"    ||
+      output == "yes\n"  ||
+      output == "on\n");
+
+  return autoClear;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 int main (int argc, const char** argv)
 {
+  std::string command = "";
   int status = 0;
 
   // Lightweight version checking that doesn't require initialization or any I/O.
   if (argc == 2 && !strcmp (argv[1], "--version"))
   {
     std::cout << VERSION << "\n";
+
+    // Returning -1 drops out of the command loop, but gets translated to 0 here,
+    // so that there is a clean way to exit.
+    return status == -1 ? 0 : status;
   }
-  else
+
+  if (isatty (fileno (stdin)))
+    welcome ();
+
+  // Process anything given as command-line arguments.
+  if (argc > 1)
   {
     try
     {
-      // Get the Taskwarrior rc.tasksh.autoclear Boolean setting.
-      bool autoClear = false;
-      std::string input;
-      std::string output;
-      execute ("task", {"_get", "rc.tasksh.autoclear"}, input, output);
-      output = lowerCase (output);
-      autoClear = (output == "true\n" ||
-                   output == "1\n"    ||
-                   output == "y\n"    ||
-                   output == "yes\n"  ||
-                   output == "on\n");
-
-      if (isatty (fileno (stdin)))
-        welcome ();
-
-      while ((status = commandLoop (autoClear)) == 0)
-        ;
+      std::string cmd;
+      for (int i = 1; i < argc; i++)
+      {
+	std::string cmd_str (argv[i]);
+	command += " " + cmd_str;
+      }
+      status = commandLoop (command, should_auto_clear ());
     }
-
     catch (const std::string& error)
     {
       std::cerr << error << "\n";
       status = -1;
     }
+  }
 
-    catch (...)
+  try
+  {
+    while (status == 0)
     {
-      std::cerr << "Unknown error." << "\n";
-      status = -2;
+      command = get_response ();
+      status = commandLoop (command, should_auto_clear ());
     }
+  }
+
+  catch (const std::string& error)
+  {
+    std::cerr << error << "\n";
+    status = -1;
+  }
+
+  catch (...)
+  {
+    std::cerr << "Unknown error." << "\n";
+    status = -2;
   }
 
   // Returning -1 drops out of the command loop, but gets translated to 0 here,
