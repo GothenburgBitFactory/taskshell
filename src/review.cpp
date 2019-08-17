@@ -69,6 +69,29 @@ static unsigned int getWidth ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+static const std::string getColorNameFromConfig (const std::string& configPath, const std::string& defaultColorName)
+{
+  std::string input;
+  std::string output;
+
+  std::string colorName = defaultColorName;
+
+  bool status = execute ("task", {"_get", "rc.tasksh.color."+configPath}, input, output);
+
+  if (status == 0 && output != "\n")
+  {
+    colorName = Lexer::trimRight(output, "\n");
+  }
+
+  return colorName;
+}
+////////////////////////////////////////////////////////////////////////////////
+static Color getColor(const std::string colorFgName, const std::string colorBgName)
+{
+  return Color(colorFgName+" on "+colorBgName);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 static void editTask (const std::string& uuid)
 {
   std::string command = "task rc.confirmation:no rc.verbose:nothing " + uuid + " edit";
@@ -82,7 +105,10 @@ static void editTask (const std::string& uuid)
 ////////////////////////////////////////////////////////////////////////////////
 static void modifyTask (const std::string& uuid)
 {
-  Color text ("color15 on gray6");
+  Color text =
+      getColor(getColorNameFromConfig("modify.fg", "color15"),
+               getColorNameFromConfig("modify.bg", "color27"));
+
   std::string modifications;
   do
   {
@@ -163,8 +189,12 @@ static const std::string banner (
            << total
            << "] ";
 
-  Color progressColor ("color15 on color9");
-  Color descColor     ("color15 on gray6");
+  Color progressColor =
+      getColor(getColorNameFromConfig("progress.fg", "color15"),
+               getColorNameFromConfig("progress.bg", "color9"));
+  Color descColor =
+      getColor(getColorNameFromConfig("description.fg", "color15"),
+               getColorNameFromConfig("description.bg", "color238"));
 
   std::string composed;
   if (progress.str ().length () + message.length () + 1 < width)
@@ -181,7 +211,9 @@ static const std::string banner (
 ////////////////////////////////////////////////////////////////////////////////
 static const std::string menu ()
 {
-  return Color ("color15 on gray6").colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (i)nformation, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
+  return getColor(getColorNameFromConfig("actions.fg", "color15"),
+                  getColorNameFromConfig("actions.bg", "color238"))
+    .colorize (" (Enter) Mark as reviewed, (s)kip, (e)dit, (i)nformation, (m)odify, (c)omplete, (d)elete, (q)uit ") + " ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////

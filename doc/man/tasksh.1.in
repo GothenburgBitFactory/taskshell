@@ -151,6 +151,18 @@ cursor reset. Default is "0".
 .B tasksh.contextprompt=1
 If set to "1", will display the context (if set) in the prompt. Default is "0".
 
+.TP
+To modify colors, use .taskrc configuration file settings:
+
+.B tasksh.color.progress.fg
+.B tasksh.color.progress.bg
+.B tasksh.color.description.fg
+.B tasksh.color.description.bg
+.B tasksh.color.actions.fg
+.B tasksh.color.actions.bg
+.B tasksh.color.modify.fg
+.B tasksh.color.modify.bg
+
 .SH "CREDITS & COPYRIGHTS"
 Copyright (C) 2006 \- 2018 P. Beckingham, F. Hernandez.
 
