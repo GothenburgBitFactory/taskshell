@@ -1,3 +1,9 @@
+# Installing
+* Debian/Ubuntu:
+```
+$ sudo apt-get install tasksh
+```
+
 # Disclaimer during ongoing development
 
 The development branch is a work in progress and may not pass all quality tests,
