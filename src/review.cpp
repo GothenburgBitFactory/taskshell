@@ -31,6 +31,7 @@
 #include <string>
 #include <algorithm>
 #include <stdlib.h>
+#include <limits>
 
 #ifdef HAVE_READLINE
 #include <readline/readline.h>
